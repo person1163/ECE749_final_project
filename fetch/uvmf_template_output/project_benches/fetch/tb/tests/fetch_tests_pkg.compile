@@ -1,0 +1,15 @@
+needs:
+# pragma uvmf custom needs_additional begin
+# pragma uvmf custom needs_additional end
+  - $UVMF_HOME/uvmf_base_pkg/uvmf_base_pkg.compile
+  - ../../../../verification_ip/interface_packages/fetch_in_pkg/fetch_in.compile
+  - ../../../../verification_ip/interface_packages/fetch_out_pkg/fetch_out.compile
+  - ../../../../verification_ip/environment_packages/fetch_env_pkg/fetch_env_pkg.compile
+  - ../parameters/fetch_parameters_pkg.compile
+  - ../sequences/fetch_sequences_pkg.compile
+src:
+# pragma uvmf custom src_additional begin
+# pragma uvmf custom src_additional end
+  - fetch_tests_pkg.sv
+# pragma uvmf custom compile_additional begin
+# pragma uvmf custom compile_additional end

@@ -1,0 +1,121 @@
+<certe_dump>
+  <instance type=" test_top "> 
+     uvm_test_top 
+  
+     <instance type=" fetch_environment "> 
+        environment 
+  
+        <instance type=" fetch_in_agent "> 
+           fetch_in_agent 
+  
+           <instance type=" fetch_in_driver "> 
+              fetch_in_agent_driver 
+  
+              <port if_type = "uvm_analysis_port" txn_type = "anonymous"> 
+                 rsp_port 
+                 <connection>  uvm_test_top.environment.fetch_in_agent.sequencer.rsp_export  </connection> 
+              </port> 
+  
+              <port if_type = "uvm_seq_item_pull_port" txn_type = "anonymous"> 
+                 seq_item_port 
+                 <connection>  uvm_test_top.environment.fetch_in_agent.sequencer.seq_item_export  </connection> 
+              </port> 
+           </instance> 
+  
+  
+           <instance type=" fetch_in_monitor "> 
+              fetch_in_agent_monitor 
+  
+              <port if_type = "uvm_analysis_port" txn_type = "anonymous"> 
+                 monitored_ap 
+                 <connection>  uvm_test_top.environment.fetch_in_agent.monitored_ap  </connection> 
+              </port> 
+           </instance> 
+  
+  
+           <port if_type = "uvm_analysis_port" txn_type = "anonymous"> 
+              monitored_ap 
+              <connection>  uvm_test_top.environment.fetch_pred.fetch_in_agent_ae  </connection> 
+           </port> 
+  
+           <instance type=" uvm_sequencer "> 
+              sequencer 
+  
+              <export if_type = "uvm_analysis_export" txn_type = "anonymous"> 
+                 rsp_export 
+                 <connection>  uvm_test_top.environment.fetch_in_agent.sequencer.sqr_rsp_analysis_fifo.analysis_export  </connection> 
+              </export> 
+  
+              <imp if_type = "uvm_seq_item_pull_imp" txn_type = "anonymous"> 
+                 seq_item_export 
+              </imp> 
+           </instance> 
+  
+        </instance> 
+  
+  
+        <instance type=" fetch_out_agent "> 
+           fetch_out_agent 
+  
+           <instance type=" fetch_out_monitor "> 
+              fetch_out_agent_monitor 
+  
+              <port if_type = "uvm_analysis_port" txn_type = "anonymous"> 
+                 monitored_ap 
+                 <connection>  uvm_test_top.environment.fetch_out_agent.monitored_ap  </connection> 
+              </port> 
+           </instance> 
+  
+  
+           <port if_type = "uvm_analysis_port" txn_type = "anonymous"> 
+              monitored_ap 
+              <connection>  uvm_test_top.environment.fetch_sb.actual_analysis_export  </connection> 
+           </port> 
+        </instance> 
+  
+  
+        <instance type=" uvm_component "> 
+           fetch_pred 
+  
+           <imp if_type = "uvm_analysis_imp_fetch_in_agent_ae" txn_type = "anonymous"> 
+              fetch_in_agent_ae 
+           </imp> 
+  
+           <port if_type = "uvm_analysis_port" txn_type = "anonymous"> 
+              fetch_sb_ap 
+              <connection>  uvm_test_top.environment.fetch_sb.expected_analysis_export  </connection> 
+           </port> 
+        </instance> 
+  
+  
+        <instance type=" uvm_scoreboard "> 
+           fetch_sb 
+  
+           <imp if_type = "uvm_analysis_imp_actual" txn_type = "anonymous"> 
+              actual_analysis_export 
+           </imp> 
+  
+           <imp if_type = "uvm_analysis_imp_expected" txn_type = "anonymous"> 
+              expected_analysis_export 
+           </imp> 
+        </instance> 
+  
+  
+        <instance type=" uvm_sequencer "> 
+           vsqr 
+  
+           <export if_type = "uvm_analysis_export" txn_type = "anonymous"> 
+              rsp_export 
+              <connection>  uvm_test_top.environment.vsqr.sqr_rsp_analysis_fifo.analysis_export  </connection> 
+           </export> 
+  
+           <imp if_type = "uvm_seq_item_pull_imp" txn_type = "anonymous"> 
+              seq_item_export 
+           </imp> 
+        </instance> 
+  
+     </instance> 
+  
+  </instance> 
+  
+  </certe_dump>

@@ -1,0 +1,13 @@
+uvmf:
+  benches:
+    fetch:
+      active_passive:
+      - bfm_name: fetch_in_agent
+        value: ACTIVE
+      - bfm_name: fetch_out_agent
+        value: PASSIVE
+      clock_half_period: 5ns
+      interface_params: []
+      reset_assertion_level: 'False'
+      reset_duration: 30ns
+      top_env: fetch

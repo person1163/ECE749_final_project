@@ -1,0 +1,93 @@
+# 
+# 
+# 
+# 
+# //  Questa Sim-64
+# //  Version 2025.1_1 linux_x86_64 Feb 13 2025
+# //
+# // Unpublished work. Copyright 2025 Siemens
+# //
+# // This material contains trade secrets or otherwise confidential information
+# // owned by Siemens Industry Software Inc. or its affiliates (collectively,
+# // "SISW"), or its licensors. Access to and use of this information is strictly
+# // limited as set forth in the Customer's applicable agreements with SISW.
+# //
+# // This material may not be copied, distributed, or otherwise disclosed outside
+# // of the Customer's facilities without the express written permission of SISW,
+# // and may not be used in any way not expressly authorized by SISW.
+# //
+# vsim -i -sv_seed random "+UVM_TESTNAME=test_top" -permit_unmatched_virtual_intf "+notimingchecks" -suppress 8887 -solvefaildebug -solvefailtestcase -assertdebug -uvmcontrol=all "+uvm_set_config_int=*,enable_transaction_viewing,1" -classdebug -msgmode tran -do " set NoQuitOnFinish 1; run 0; do wave.do " optimized_debug_top_tb 
+# Start time: 17:21:32 on Nov 13,2025
+# Loading sv_std.std
+# Loading work.fetch_out_driver_bfm(fast)
+# Loading work.fetch_out_monitor_bfm(fast)
+# Loading work.uvmf_base_pkg_hdl(fast)
+# Loading work.fetch_out_pkg_hdl(fast)
+# Loading work.fetch_in_driver_bfm(fast)
+# Loading work.fetch_in_monitor_bfm(fast)
+# Loading mtiUvm.uvm_pkg(fast)
+# Loading work.uvmf_base_pkg(fast)
+# Loading work.fetch_out_pkg(fast)
+# Loading work.fetch_in_pkg_hdl(fast)
+# Loading work.fetch_in_pkg(fast)
+# Loading work.lc3_prediction_pkg(fast)
+# Loading work.fetch_env_pkg(fast)
+# Loading work.fetch_parameters_pkg(fast)
+# Loading work.fetch_sequences_pkg(fast)
+# Loading work.fetch_tests_pkg(fast)
+# Loading mtiUvm.questa_uvm_pkg(fast)
+# Loading work.hvl_top(fast)
+# Loading work.hdl_top(fast)
+# Loading work.fetch_in_if_sv_unit(fast)
+# Loading work.fetch_in_if(fast__1)
+# Loading work.fetch_out_if_sv_unit(fast)
+# Loading work.fetch_out_if(fast__1)
+# Loading work.fetch_in_monitor_bfm_sv_unit(fast)
+# Loading work.fetch_in_monitor_bfm(fast__1)
+# Loading work.fetch_out_monitor_bfm_sv_unit(fast)
+# Loading work.fetch_out_monitor_bfm(fast__1)
+# Loading work.fetch_in_driver_bfm_sv_unit(fast)
+# Loading work.fetch_in_driver_bfm(fast__1)
+# Loading work.Fetch(fast)
+# Loading /mnt/apps/public/COE/mg_apps/questa2025.1_1/questasim/uvm-1.1d/linux_x86_64/uvm_dpi.so
+# Sv_Seed = 2505511051
+#  set NoQuitOnFinish 1
+# 1
+#  run 0
+# ----------------------------------------------------------------
+# UVM-1.1d
+# (C) 2007-2013 Mentor Graphics Corporation
+# (C) 2007-2013 Cadence Design Systems, Inc.
+# (C) 2006-2013 Synopsys, Inc.
+# (C) 2011-2013 Cypress Semiconductor Corp.
+# ----------------------------------------------------------------
+# 
+#   ***********       IMPORTANT RELEASE NOTES         ************
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_NO_DEPRECATED undefined.
+#   See http://www.eda.org/svdb/view.php?id=3313 for more details.
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_OBJECT_MUST_HAVE_CONSTRUCTOR undefined.
+#   See http://www.eda.org/svdb/view.php?id=3770 for more details.
+# 
+#       (Specify +UVM_NO_RELNOTES to turn off this notice)
+# 
+# ----------------------------------------------------------------
+# //  UVM Framework 
+# //  Version 2023.4_2
+# //  (C) 2013-2024 Siemens Corporation
+# //  Digital Industries Software
+# //  Siemens EDA
+# //  All Rights Reserved.
+# ----------------------------------------------------------------
+# 
+# 
+# UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(277) @ 0: reporter [Questa UVM] QUESTA_UVM-1.2.3
+# UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(278) @ 0: reporter [Questa UVM]  questa_uvm::init(all)
+# UVM_INFO @ 0.000ns: reporter [RNTST] Running test test_top...
+# UVM_INFO @ 0.000ns: reporter [UVM_CMDLINE_PROC] Applying config setting from the command line: +uvm_set_config_int=*,enable_transaction_viewing,1
+# UVM_WARNING @ 0.000ns: reporter [COVERAGE_MODEL_REVIEW] A covergroup has been constructed which may need review because of either generation or re-generation with merging.  Please note that configuration variables added as a result of re-generation and merging are not automatically added to the covergroup.  Remove this warning after the covergroup has been reviewed.
+# UVM_WARNING @ 0.000ns: uvm_test_top.environment.fetch_pred [PREDICTOR_REVIEW] This predictor has been created either through generation or re-generation with merging.  Remove this warning after the predictor has been reviewed.
+#  do wave.do 
