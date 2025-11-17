@@ -1,0 +1,73 @@
+uvmf:
+  interfaces:
+    memaccess_in:
+      clock: clock
+      reset: reset
+      reset_assertion_level: 'False'
+      existing_library_component: 'False'
+      gen_inbound_streaming_driver: 'False'
+      
+      hdl_typedefs:
+        - name: bit_16
+          type: "bit [15:0]"
+        - name: mem_state_t
+          type: "bit [1:0]"
+        - name: op_t
+          type: "enum bit [3:0] {ADD=4'b0001, AND=4'b0101, NOT=4'b1001, LD=4'b0010, LDR=4'b0110, LDI=4'b1010, LEA=4'b1110, ST=4'b0011, STR=4'b0111, STI=4'b1011, BR=4'b0000, JMP=4'b1100}"
+      
+      hdl_pkg_parameters: []
+      hvl_pkg_parameters: []
+      parameters: []
+      
+      ports:
+        - name: MControl
+          dir: output
+          width: '1'
+        - name: MAddr
+          dir: output
+          width: '16'
+        - name: MData
+          dir: output
+          width: '16'
+        - name: DMem_out
+          dir: input
+          width: '16'
+        - name: completedata
+          dir: output
+          width: '1'
+      
+      transaction_vars:
+        - name: MControl
+          type: bit
+          isrand: 'True'
+          iscompare: 'True'
+          unpacked_dimension: ''
+        
+        - name: MAddr
+          type: bit_16
+          isrand: 'True'
+          iscompare: 'True'
+          unpacked_dimension: ''
+        
+        - name: MData
+          type: bit_16
+          isrand: 'True'
+          iscompare: 'True'
+          unpacked_dimension: ''
+        
+        - name: DMem_out
+          type: bit_16
+          isrand: 'True'
+          iscompare: 'True'
+          unpacked_dimension: ''
+        
+        - name: completedata
+          type: bit
+          isrand: 'True'
+          iscompare: 'True'
+          unpacked_dimension: ''
+      
+      transaction_constraints: []
+      config_vars: []
+      config_constraints: []
+      use_dpi_link: 'False'

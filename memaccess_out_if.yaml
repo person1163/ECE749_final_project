@@ -1,0 +1,53 @@
+uvmf:
+  interfaces:
+    memaccess_out:
+      clock: clock
+      reset: reset
+      reset_assertion_level: '0'
+      existing_library_component: 'False'
+      gen_inbound_streaming_driver: 'False'
+      
+      hdl_typedefs:
+        - name: data_word
+          type: "bit [15:0]"
+        - name: addr_word
+          type: "bit [15:0]"
+      
+      parameters: []
+      hdl_pkg_parameters: []
+      hvl_pkg_parameters: []
+      
+      ports:
+        - name: DMemaddr
+          dir: output
+          width: '16'
+        - name: DMemrd
+          dir: output
+          width: '1'
+        - name: DMemdin
+          dir: output
+          width: '16'
+      
+      transaction_vars:
+        - name: DMemaddr
+          type: addr_word
+          isrand: 'False'
+          iscompare: 'True'
+          unpacked_dimension: ''
+        
+        - name: DMemrd
+          type: bit
+          isrand: 'False'
+          iscompare: 'True'
+          unpacked_dimension: ''
+        
+        - name: DMemdin
+          type: data_word
+          isrand: 'False'
+          iscompare: 'True'
+          unpacked_dimension: ''
+      
+      transaction_constraints: []
+      config_vars: []
+      config_constraints: []
+      use_dpi_link: 'False'
