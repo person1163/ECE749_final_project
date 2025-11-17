@@ -1,0 +1,19 @@
+uvmf:
+  benches:
+    memaccess_bench:
+      active_passive:
+      - bfm_name: memaccess_in_agt
+        value: PASSIVE
+      - bfm_name: memaccess_out_agt
+        value: PASSIVE
+      active_passive_default: ACTIVE
+      clock_half_period: 5ns
+      clock_phase_offset: 9ns
+      existing_library_component: 'True'
+      imports:
+      - name: memaccess_env_pkg
+      interface_params: []
+      reset_assertion_level: 'False'
+      reset_duration: 30ns
+      top_env: memaccess
+      use_dpi_link: 'False'

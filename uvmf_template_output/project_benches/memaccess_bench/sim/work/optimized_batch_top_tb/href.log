@@ -1,0 +1,24 @@
+BEGIN 3:memaccess_in_if:fast__1:work
+    MControl :  3:memaccess_in_monitor_bfm:fast__1:work
+    reset :  3:memaccess_in_monitor_bfm:fast__1:work
+    clock :  3:memaccess_in_monitor_bfm:fast__1:work
+    MData :  3:memaccess_in_monitor_bfm:fast__1:work
+    completedata :  3:memaccess_in_monitor_bfm:fast__1:work
+    DMem_out :  3:memaccess_in_monitor_bfm:fast__1:work
+    MAddr :  3:memaccess_in_monitor_bfm:fast__1:work
+END 
+BEGIN 3:memaccess_in_monitor_bfm:fast__1:work
+    proxy :  3:memaccess_in_monitor_bfm:fast__1:work
+END 
+BEGIN 3:memaccess_out_if:fast__1:work
+    clock :  3:memaccess_out_monitor_bfm:fast__1:work
+    MData :  3:memaccess_out_monitor_bfm:fast__1:work
+    completedata :  3:memaccess_out_monitor_bfm:fast__1:work
+    MAddr :  3:memaccess_out_monitor_bfm:fast__1:work
+    MControl :  3:memaccess_out_monitor_bfm:fast__1:work
+    reset :  3:memaccess_out_monitor_bfm:fast__1:work
+    DMem_out :  3:memaccess_out_monitor_bfm:fast__1:work
+END 
+BEGIN 3:memaccess_out_monitor_bfm:fast__1:work
+    proxy :  3:memaccess_out_monitor_bfm:fast__1:work
+END 
