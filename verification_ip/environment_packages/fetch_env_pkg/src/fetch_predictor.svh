@@ -96,9 +96,11 @@ class fetch_predictor #(
     // Construct one of each output transaction type.
     fetch_sb_ap_output_transaction = fetch_sb_ap_output_transaction_t::type_id::create("fetch_sb_ap_output_transaction");
     //  UVMF_CHANGE_ME: Implement predictor model here.  
-    `uvm_info("UNIMPLEMENTED_PREDICTOR_MODEL", "******************************************************************************************************",UVM_NONE)
-    `uvm_info("UNIMPLEMENTED_PREDICTOR_MODEL", "UVMF_CHANGE_ME: The fetch_predictor::write_fetch_in_agent_ae function needs to be completed with DUT prediction model",UVM_NONE)
-    `uvm_info("UNIMPLEMENTED_PREDICTOR_MODEL", "******************************************************************************************************",UVM_NONE)
+    // `uvm_info("UNIMPLEMENTED_PREDICTOR_MODEL", "******************************************************************************************************",UVM_NONE)
+    // `uvm_info("UNIMPLEMENTED_PREDICTOR_MODEL", "UVMF_CHANGE_ME: The fetch_predictor::write_fetch_in_agent_ae function needs to be completed with DUT prediction model",UVM_NONE)
+    // `uvm_info("UNIMPLEMENTED_PREDICTOR_MODEL", "******************************************************************************************************",UVM_NONE)
+    fetch_model(t.enable_updatePC, t.enable_fetch, t.br_taken, t.taddr,
+    fetch_sb_ap_output_transaction.npc, fetch_sb_ap_output_transaction.pc, fetch_sb_ap_output_transaction.instrmem_rd);
  
     // Code for sending output transaction out through fetch_sb_ap
     // Please note that each broadcasted transaction should be a different object than previously 
@@ -114,4 +116,3 @@ endclass
 
 // pragma uvmf custom external begin
 // pragma uvmf custom external end
-
