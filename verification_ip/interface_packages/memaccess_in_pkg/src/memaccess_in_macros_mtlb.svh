@@ -53,7 +53,7 @@ typedef struct packed  { \
   bit_16 _MAddr ; \
   bit_16 _MData ; \
   bit_16 _DMem_out ; \
-  bit _completedata ; \
+  mem_state_t _mem_state ; \
      } memaccess_in_monitor_s;
 
   `define memaccess_in_TO_MONITOR_STRUCT_FUNCTION \
@@ -64,7 +64,7 @@ typedef struct packed  { \
             this._MAddr , \
             this._MData , \
             this._DMem_out , \
-            this._completedata  \
+            this._mem_state  \
             };\
     return ( memaccess_in_monitor_struct);\
   endfunction\
@@ -76,7 +76,7 @@ typedef struct packed  { \
             this._MAddr , \
             this._MData , \
             this._DMem_out , \
-            this._completedata  \
+            this._mem_state  \
             } = memaccess_in_monitor_struct;\
   endfunction
 
@@ -90,7 +90,7 @@ typedef struct packed  { \
   bit_16 _MAddr ; \
   bit_16 _MData ; \
   bit_16 _DMem_out ; \
-  bit _completedata ; \
+  mem_state_t _mem_state ; \
      } memaccess_in_initiator_s;
 
   `define memaccess_in_TO_INITIATOR_STRUCT_FUNCTION \
@@ -101,7 +101,7 @@ typedef struct packed  { \
            this._MAddr , \
            this._MData , \
            this._DMem_out , \
-           this._completedata  \
+           this._mem_state  \
            };\
     return ( memaccess_in_initiator_struct);\
   endfunction
@@ -113,7 +113,7 @@ typedef struct packed  { \
            this._MAddr , \
            this._MData , \
            this._DMem_out , \
-           this._completedata  \
+           this._mem_state  \
            } = memaccess_in_initiator_struct;\
   endfunction
 
@@ -127,7 +127,7 @@ typedef struct packed  { \
   bit_16 _MAddr ; \
   bit_16 _MData ; \
   bit_16 _DMem_out ; \
-  bit _completedata ; \
+  mem_state_t _mem_state ; \
      } memaccess_in_responder_s;
 
   `define memaccess_in_TO_RESPONDER_STRUCT_FUNCTION \
@@ -138,7 +138,7 @@ typedef struct packed  { \
            this._MAddr , \
            this._MData , \
            this._DMem_out , \
-           this._completedata  \
+           this._mem_state  \
            };\
     return ( memaccess_in_responder_struct);\
   endfunction
@@ -150,7 +150,7 @@ typedef struct packed  { \
            this._MAddr , \
            this._MData , \
            this._DMem_out , \
-           this._completedata  \
+           this._mem_state  \
            } = memaccess_in_responder_struct;\
   endfunction
 // pragma uvmf custom additional begin

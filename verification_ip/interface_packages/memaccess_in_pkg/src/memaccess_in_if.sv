@@ -23,7 +23,7 @@
 // .dut_signal_port(memaccess_in_bus.MAddr), // Agent output 
 // .dut_signal_port(memaccess_in_bus.MData), // Agent output 
 // .dut_signal_port(memaccess_in_bus.DMem_out), // Agent input 
-// .dut_signal_port(memaccess_in_bus.completedata), // Agent output 
+// .dut_signal_port(memaccess_in_bus.mem_state), // Agent output 
 
 import uvmf_base_pkg_hdl::*;
 import memaccess_in_pkg_hdl::*;
@@ -37,7 +37,7 @@ interface  memaccess_in_if
   inout tri [15:0] MAddr,
   inout tri [15:0] MData,
   inout tri [15:0] DMem_out,
-  inout tri  completedata
+  inout tri [1:0] mem_state
   );
 
 modport monitor_port 
@@ -48,7 +48,7 @@ modport monitor_port
   input MAddr,
   input MData,
   input DMem_out,
-  input completedata
+  input mem_state
   );
 
 modport initiator_port 
@@ -59,7 +59,7 @@ modport initiator_port
   output MAddr,
   output MData,
   input DMem_out,
-  output completedata
+  output mem_state
   );
 
 modport responder_port 
@@ -70,7 +70,7 @@ modport responder_port
   input MAddr,
   input MData,
   output DMem_out,
-  input completedata
+  input mem_state
   );
   
 

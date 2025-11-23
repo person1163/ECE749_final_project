@@ -100,8 +100,8 @@ end
   reg [15:0] MAddr_o = 'b0;
   tri [15:0] MData_i;
   reg [15:0] MData_o = 'b0;
-  tri  completedata_i;
-  reg  completedata_o = 'b0;
+  tri [1:0] mem_state_i;
+  reg [1:0] mem_state_o = 'b0;
 
   // Bi-directional signals
   
@@ -123,8 +123,8 @@ end
   assign MAddr_i = bus.MAddr;
   assign bus.MData = (initiator_responder == INITIATOR) ? MData_o : 'bz;
   assign MData_i = bus.MData;
-  assign bus.completedata = (initiator_responder == INITIATOR) ? completedata_o : 'bz;
-  assign completedata_i = bus.completedata;
+  assign bus.mem_state = (initiator_responder == INITIATOR) ? mem_state_o : 'bz;
+  assign mem_state_i = bus.mem_state;
 
   // Proxy handle to UVM driver
   memaccess_in_pkg::memaccess_in_driver   proxy;
@@ -160,7 +160,7 @@ end
        MControl_o <= 'b0;
        MAddr_o <= 'b0;
        MData_o <= 'b0;
-       completedata_o <= 'b0;
+       mem_state_o <= 'b0;
        // Bi-directional signals
  
      end    
@@ -204,13 +204,13 @@ end
        //   bit_16 MAddr ;
        //   bit_16 MData ;
        //   bit_16 DMem_out ;
-       //   bit completedata ;
+       //   mem_state_t mem_state ;
        // Members within the memaccess_in_responder_struct:
        //   bit MControl ;
        //   bit_16 MAddr ;
        //   bit_16 MData ;
        //   bit_16 DMem_out ;
-       //   bit completedata ;
+       //   mem_state_t mem_state ;
        initiator_struct = memaccess_in_initiator_struct;
        //
        // Reference code;
@@ -229,7 +229,7 @@ end
        //      MControl_o <= memaccess_in_initiator_struct.xyz;  //     
        //      MAddr_o <= memaccess_in_initiator_struct.xyz;  //    [15:0] 
        //      MData_o <= memaccess_in_initiator_struct.xyz;  //    [15:0] 
-       //      completedata_o <= memaccess_in_initiator_struct.xyz;  //     
+       //      mem_state_o <= memaccess_in_initiator_struct.xyz;  //    [1:0] 
        //    Initiator inout signals
     // Initiate a transfer using the data received.
     @(posedge clock_i);
@@ -265,13 +265,13 @@ bit first_transfer=1;
   //   bit_16 MAddr ;
   //   bit_16 MData ;
   //   bit_16 DMem_out ;
-  //   bit completedata ;
+  //   mem_state_t mem_state ;
   // Variables within the memaccess_in_responder_struct:
   //   bit MControl ;
   //   bit_16 MAddr ;
   //   bit_16 MData ;
   //   bit_16 DMem_out ;
-  //   bit completedata ;
+  //   mem_state_t mem_state ;
        // Reference code;
        //    How to wait for signal value
        //      while (control_signal == 1'b1) @(posedge clock_i);
@@ -282,7 +282,7 @@ bit first_transfer=1;
        //      memaccess_in_initiator_struct.xyz = MControl_i;  //     
        //      memaccess_in_initiator_struct.xyz = MAddr_i;  //    [15:0] 
        //      memaccess_in_initiator_struct.xyz = MData_i;  //    [15:0] 
-       //      memaccess_in_initiator_struct.xyz = completedata_i;  //     
+       //      memaccess_in_initiator_struct.xyz = mem_state_i;  //    [1:0] 
        //    Responder inout signals
        //    How to assign a signal, named xyz, from an responder struct member.   
        //    All available responder output and inout signals listed.

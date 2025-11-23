@@ -33,7 +33,7 @@ class memaccess_in_transaction_coverage  extends uvm_subscriber #(.T(memaccess_i
     MAddr: coverpoint coverage_trans.MAddr;
     MData: coverpoint coverage_trans.MData;
     DMem_out: coverpoint coverage_trans.DMem_out;
-    completedata: coverpoint coverage_trans.completedata;
+    mem_state: coverpoint coverage_trans.mem_state;
     // pragma uvmf custom covergroup end
   endgroup
 

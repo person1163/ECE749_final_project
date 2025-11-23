@@ -73,14 +73,14 @@ end
   tri [15:0] MAddr_i;
   tri [15:0] MData_i;
   tri [15:0] DMem_out_i;
-  tri  completedata_i;
+  tri [1:0] mem_state_i;
   assign clock_i = bus.clock;
   assign reset_i = bus.reset;
   assign MControl_i = bus.MControl;
   assign MAddr_i = bus.MAddr;
   assign MData_i = bus.MData;
   assign DMem_out_i = bus.DMem_out;
-  assign completedata_i = bus.completedata;
+  assign mem_state_i = bus.mem_state;
 
   // Proxy handle to UVM monitor
   memaccess_in_pkg::memaccess_in_monitor  proxy;
@@ -154,7 +154,7 @@ end
     //     //    memaccess_in_monitor_struct.MAddr
     //     //    memaccess_in_monitor_struct.MData
     //     //    memaccess_in_monitor_struct.DMem_out
-    //     //    memaccess_in_monitor_struct.completedata
+    //     //    memaccess_in_monitor_struct.mem_state
     //     //
     // Reference code;
     //    How to wait for signal value
@@ -166,7 +166,7 @@ end
     //      memaccess_in_monitor_struct.xyz = MAddr_i;  //    [15:0] 
     //      memaccess_in_monitor_struct.xyz = MData_i;  //    [15:0] 
     //      memaccess_in_monitor_struct.xyz = DMem_out_i;  //    [15:0] 
-    //      memaccess_in_monitor_struct.xyz = completedata_i;  //     
+    //      memaccess_in_monitor_struct.xyz = mem_state_i;  //    [1:0] 
     // pragma uvmf custom do_monitor begin
     // UVMF_CHANGE_ME : Implement protocol monitoring.  The commented reference code 
     // below are examples of how to capture signal values and assign them to 

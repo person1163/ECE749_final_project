@@ -32,9 +32,9 @@ uvmf:
         - name: DMem_out
           dir: input
           width: '16'
-        - name: completedata
+        - name: mem_state
           dir: output
-          width: '1'
+          width: '2'
       
       transaction_vars:
         - name: MControl
@@ -42,27 +42,23 @@ uvmf:
           isrand: 'True'
           iscompare: 'True'
           unpacked_dimension: ''
-        
         - name: MAddr
           type: bit_16
           isrand: 'True'
           iscompare: 'True'
           unpacked_dimension: ''
-        
         - name: MData
           type: bit_16
           isrand: 'True'
           iscompare: 'True'
           unpacked_dimension: ''
-        
         - name: DMem_out
           type: bit_16
           isrand: 'True'
           iscompare: 'True'
           unpacked_dimension: ''
-        
-        - name: completedata
-          type: bit
+        - name: mem_state
+          type: mem_state_t
           isrand: 'True'
           iscompare: 'True'
           unpacked_dimension: ''

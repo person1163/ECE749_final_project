@@ -22,7 +22,7 @@ class memaccess_in_transaction  extends uvmf_transaction_base;
   rand bit_16 MAddr ;
   rand bit_16 MData ;
   rand bit_16 DMem_out ;
-  rand bit completedata ;
+  rand mem_state_t mem_state ;
 
   //Constraints for the transaction variables:
 
@@ -105,7 +105,7 @@ class memaccess_in_transaction  extends uvmf_transaction_base;
   virtual function string convert2string();
     // pragma uvmf custom convert2string begin
     // UVMF_CHANGE_ME : Customize format if desired.
-    return $sformatf("MControl:0x%x MAddr:0x%x MData:0x%x DMem_out:0x%x completedata:0x%x ",MControl,MAddr,MData,DMem_out,completedata);
+    return $sformatf("MControl:0x%x MAddr:0x%x MData:0x%x DMem_out:0x%x mem_state:0x%x ",MControl,MAddr,MData,DMem_out,mem_state);
     // pragma uvmf custom convert2string end
   endfunction
 
@@ -137,7 +137,7 @@ class memaccess_in_transaction  extends uvmf_transaction_base;
             &&(this.MAddr == RHS.MAddr)
             &&(this.MData == RHS.MData)
             &&(this.DMem_out == RHS.DMem_out)
-            &&(this.completedata == RHS.completedata)
+            &&(this.mem_state == RHS.mem_state)
             );
     // pragma uvmf custom do_compare end
   endfunction
@@ -158,7 +158,7 @@ class memaccess_in_transaction  extends uvmf_transaction_base;
     this.MAddr = RHS.MAddr;
     this.MData = RHS.MData;
     this.DMem_out = RHS.DMem_out;
-    this.completedata = RHS.completedata;
+    this.mem_state = RHS.mem_state;
     // pragma uvmf custom do_copy end
   endfunction
 
@@ -186,7 +186,7 @@ class memaccess_in_transaction  extends uvmf_transaction_base;
     $add_attribute(transaction_view_h,MAddr,"MAddr");
     $add_attribute(transaction_view_h,MData,"MData");
     $add_attribute(transaction_view_h,DMem_out,"DMem_out");
-    $add_attribute(transaction_view_h,completedata,"completedata");
+    $add_attribute(transaction_view_h,mem_state,"mem_state");
     // pragma uvmf custom add_to_wave end
     $end_transaction(transaction_view_h,end_time);
     $free_transaction(transaction_view_h);
