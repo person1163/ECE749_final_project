@@ -118,6 +118,23 @@ import uvmf_base_pkg_hdl::*;
   // pragma uvmf custom dut_instantiation end
 
   assign control_control_in_agent_bus.completed_data = dut_verilog.complete_data;
+  assign control_control_in_agent_bus.completed_instr = dut_verilog.complete_instr;
+  assign control_control_in_agent_bus.IR = dut_verilog.IR;
+  assign control_control_in_agent_bus.IR_EXEC = dut_verilog.IR_Exec;
+  assign control_control_in_agent_bus.PSR = dut_verilog.psr;
+  assign control_control_in_agent_bus.NZP = dut_verilog.NZP;
+  assign control_control_in_agent_bus.Imem_dout = dut_verilog.Instr_dout;
+  assign control_control_out_agent_bus.enable_updatePC = dut_verilog.enable_updatePC;
+  assign control_control_out_agent_bus.bypass_alu_1 = dut_verilog.bypass_alu_1;
+  assign control_control_out_agent_bus.bypass_alu_2 = dut_verilog.bypass_alu_2;
+  assign control_control_out_agent_bus.bypass_mem_1 = dut_verilog.bypass_mem_1;
+  assign control_control_out_agent_bus.bypass_mem_2 = dut_verilog.bypass_mem_2;
+  assign control_control_out_agent_bus.enable_fetch = dut_verilog.enable_fetch;
+  assign control_control_out_agent_bus.enable_decode = dut_verilog.enable_decode;
+  assign control_control_out_agent_bus.enable_execute = dut_verilog.enable_execute;
+  assign control_control_out_agent_bus.enable_writeback = dut_verilog.enable_writeback;
+  assign control_control_out_agent_bus.mem_state = dut_verilog.mem_state;
+  assign control_control_out_agent_bus.br_taken = dut_verilog.br_taken;
 
   initial begin      // tbx vif_binding_block 
     import uvm_pkg::uvm_config_db;
