@@ -148,6 +148,17 @@ import uvmf_base_pkg_hdl::*;
   assign memaccess_memaccess_out_agent_bus.DMem_din = dut_verilog.Data_din;
   assign memaccess_memaccess_out_agent_bus.memout = dut_verilog.memout;
   assign memaccess_memaccess_out_agent_bus.DMem_rd = dut_verilog.Data_rd;
+
+// Fetch connections
+  assign fetch_fetch_in_agent_bus.br_taken = dut_verilog.br_taken;
+  assign fetch_fetch_in_agent_bus.enable_fetch = dut_verilog.enable_fetch;
+  assign fetch_fetch_in_agent_bus.enable_updatePC = dut_verilog.enable_updatePC
+  assign fetch_fetch_in_agent_bus.taddr = dut_verilog.taddr;
+
+  assign fetch_fetch_out_agent_bus.instrmem_rd = dut_verilog.instrmem_rd;
+  assign fetch_fetch_out_agent_bus.pc = dut_verilog.pc;
+  assign fetch_fetch_out_agent_bus.npc = dut_verilog.npc_out;
+  
   
   initial begin      // tbx vif_binding_block 
     import uvm_pkg::uvm_config_db;
