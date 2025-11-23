@@ -38,10 +38,10 @@ class lc3_bench_sequence_base extends uvmf_sequence_base #(uvm_sequence_item);
 
   // UVMF_CHANGE_ME : Instantiate, construct, and start sequences as needed to create stimulus scenarios.
   // Instantiate sequences here
-  typedef imem_random_sequence  imem_agent_random_seq_t;
-  imem_agent_random_seq_t imem_agent_random_seq;
-  typedef dmem_random_sequence  dmem_agent_random_seq_t;
-  dmem_agent_random_seq_t dmem_agent_random_seq;
+  typedef imem_responder_sequence  imem_agent_responder_seq_t;
+  imem_agent_responder_seq_t imem_agent_responder_seq;
+  typedef dmem_responder_sequence  dmem_agent_responder_seq_t;
+  dmem_agent_responder_seq_t dmem_agent_responder_seq;
   // pragma uvmf custom sequences end
 
   // Sequencer handles for each active interface in the environment
@@ -115,8 +115,8 @@ class lc3_bench_sequence_base extends uvmf_sequence_base #(uvm_sequence_item);
 
     // lc3_env_seq = lc3_env_sequence_base_t::type_id::create("lc3_env_seq");
 
-    imem_agent_random_seq     = imem_agent_random_seq_t::type_id::create("imem_agent_random_seq");
-    dmem_agent_random_seq     = dmem_agent_random_seq_t::type_id::create("dmem_agent_random_seq");
+    imem_agent_responder_seq  = imem_agent_responder_seq_t::type_id::create("imem_agent_responder_seq");
+    dmem_agent_responder_seq  = dmem_agent_responder_seq_t::type_id::create("dmem_agent_responder_seq");
     fork
       fetch_fetch_in_agent_config.wait_for_reset();
       fetch_fetch_out_agent_config.wait_for_reset();
@@ -129,11 +129,11 @@ class lc3_bench_sequence_base extends uvmf_sequence_base #(uvm_sequence_item);
     join
     // Start RESPONDER sequences here
     fork
+      imem_agent_responder_seq.start(imem_agent_sequencer);
+      dmem_agent_responder_seq.start(dmem_agent_sequencer);
     join_none
     // Start INITIATOR sequences here
     fork
-      repeat (25) imem_agent_random_seq.start(imem_agent_sequencer);
-      repeat (25) dmem_agent_random_seq.start(dmem_agent_sequencer);
     join
 
 // lc3_env_seq.start(top_configuration.vsqr);

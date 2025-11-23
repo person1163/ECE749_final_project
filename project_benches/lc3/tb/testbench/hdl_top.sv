@@ -158,8 +158,7 @@ import uvmf_base_pkg_hdl::*;
   assign fetch_fetch_out_agent_bus.instrmem_rd = dut_verilog.instrmem_rd;
   assign fetch_fetch_out_agent_bus.pc = dut_verilog.pc;
   assign fetch_fetch_out_agent_bus.npc = dut_verilog.npc_out;
-  
-  
+
   initial begin      // tbx vif_binding_block 
     import uvm_pkg::uvm_config_db;
     // The monitor_bfm and driver_bfm for each interface is placed into the uvm_config_db.
