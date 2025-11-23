@@ -138,7 +138,7 @@ import uvmf_base_pkg_hdl::*;
 
 
 //memaccess connections:
-  assign memaccess_memaccess_in_agent_bus.MControl = dut_verilog.Mem_Control; 
+  assign memaccess_memaccess_in_agent_bus.MControl = dut_verilog.M_Control; 
   assign memaccess_memaccess_in_agent_bus.MAddr = dut_verilog.M_Addr;
   assign memaccess_memaccess_in_agent_bus.MData = dut_verilog.M_Data;
   assign memaccess_memaccess_in_agent_bus.DMem_out = dut_verilog.Data_dout;
