@@ -114,8 +114,10 @@ import uvmf_base_pkg_hdl::*;
   // UVMF_CHANGE_ME : Add DUT and connect to signals in _bus interfaces listed above
   // Instantiate your DUT here
   // These DUT's instantiated to show verilog and vhdl instantiation
-  verilog_dut         dut_verilog(   .clk(clk), .rst(rst), .in_signal(vhdl_to_verilog_signal), .out_signal(verilog_to_vhdl_signal));
+  LC3      dut_verilog(   .clk(clk), .rst(rst), .pc(imem_agent_bus.PC), .instrmem_rd(imem_agent_bus.instrmem_rd), .);
   // pragma uvmf custom dut_instantiation end
+
+  assign control_control_in_agent_bus.completed_data = dut_verilog.complete_data;
 
   initial begin      // tbx vif_binding_block 
     import uvm_pkg::uvm_config_db;
