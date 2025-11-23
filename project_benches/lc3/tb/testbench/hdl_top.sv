@@ -136,6 +136,19 @@ import uvmf_base_pkg_hdl::*;
   assign control_control_out_agent_bus.mem_state = dut_verilog.mem_state;
   assign control_control_out_agent_bus.br_taken = dut_verilog.br_taken;
 
+
+//memaccess connections:
+  assign memaccess_memaccess_in_agent_bus.MControl = dut_verilog.Mem_Control; 
+  assign memaccess_memaccess_in_agent_bus.MAddr = dut_verilog.M_Addr;
+  assign memaccess_memaccess_in_agent_bus.MData = dut_verilog.M_Data;
+  assign memaccess_memaccess_in_agent_bus.DMem_out = dut_verilog.Data_dout;
+  assign memaccess_memaccess_in_agent_bus.mem_state = dut_verilog.mem_state;
+
+  assign memaccess_memaccess_out_agent_bus.DMem_addr = dut_verilog.Data_addr; 
+  assign memaccess_memaccess_out_agent_bus.DMem_din = dut_verilog.Data_din;
+  assign memaccess_memaccess_out_agent_bus.memout = dut_verilog.memout;
+  assign memaccess_memaccess_out_agent_bus.DMem_rd = dut_verilog.Data_rd;
+  
   initial begin      // tbx vif_binding_block 
     import uvm_pkg::uvm_config_db;
     // The monitor_bfm and driver_bfm for each interface is placed into the uvm_config_db.
