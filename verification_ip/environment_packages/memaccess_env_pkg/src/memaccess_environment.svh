@@ -90,8 +90,8 @@ class memaccess_environment  extends uvmf_environment_base #(
 // pragma uvmf custom connect_phase_pre_super begin
 // pragma uvmf custom connect_phase_pre_super end
     super.connect_phase(phase);
-    memaccess_in_agent.monitored_ap.connect(memaccess_predictor.analysis_export);
-    memaccess_predictor.analysis_port.connect(memaccess_sb.expected_analysis_export);
+    memaccess_in_agent.monitored_ap.connect(memaccess_predictor.memaccess_in_agent_ae);
+    memaccess_predictor.memaccess_scrbd_pt.connect(memaccess_sb.expected_analysis_export);
     memaccess_out_agent.monitored_ap.connect(memaccess_sb.actual_analysis_export);
     // pragma uvmf custom reg_model_connect_phase begin
     // pragma uvmf custom reg_model_connect_phase end
