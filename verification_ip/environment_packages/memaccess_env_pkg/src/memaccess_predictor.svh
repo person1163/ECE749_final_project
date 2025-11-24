@@ -106,7 +106,7 @@ class memaccess_predictor #(
     // broadcasted transactions.  Creation of a different object is done by constructing the transaction 
     // using either new() or create().  Broadcasting a transaction object more than once to either the 
     // same subscriber or multiple subscribers will result in unexpected and incorrect behavior.
-    out = memaccess_model(.M_Data(t.M_Data), .M_Addr(t.M_addr), .M_Control(t.M_Control), .mem_state(t.mem_state), .DMem_dout(t.DMem_dout), .DMem_addr(analysis_port_output_transaction.DMem_addr), .DMem_din(analysis_port_output_transaction.DMem_din), .memout(analysis_port_output_transaction.memout), .DMem_rd(analysis_port_output_transaction.DMem_rd));
+    out = memaccess_model(.M_Data(t.MData), .M_Addr(t.Maddr), .M_Control(t.MControl), .mem_state(t.mem_state), .DMem_dout(t.DMem_out), .DMem_addr(analysis_port_output_transaction.DMem_addr), .DMem_din(analysis_port_output_transaction.DMem_din), .memout(analysis_port_output_transaction.memout), .DMem_rd(analysis_port_output_transaction.DMem_rd));
     analysis_port.write(analysis_port_output_transaction);
     // pragma uvmf custom analysis_export_predictor end
   endfunction
