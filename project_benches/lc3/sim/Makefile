@@ -154,6 +154,10 @@ comp_lc3_sequence_pkg:
 
 comp_lc3_tests_pkg:
 	$(HVL_COMP_CMD) +incdir+$(UVMF_PROJECT_DIR)/tb/tests $(lc3_TEST_PKG)
+	
+comp_lc3_prediction_pkg:
+	vlog -sv +incdir+../../../verification_ip/environment_packages/lc3_prediction_pkg \
+	../../../verification_ip/environment_packages/lc3_prediction_pkg/lc3_prediction_pkg.sv	
 
 # pragma uvmf custom dut_compile_make_target begin
 # UVMF_CHANGE_ME : Add make target to compile your verilog dut here
