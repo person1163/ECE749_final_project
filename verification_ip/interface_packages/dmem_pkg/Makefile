@@ -2,15 +2,15 @@
 # pragma uvmf custom additional begin
 # pragma uvmf custom additional end
 
-dmem_PKG         ?= \
+dmem_PKG         = \
 	+incdir+$(UVMF_VIP_LIBRARY_HOME)/interface_packages/dmem_pkg \
 	-F $(UVMF_VIP_LIBRARY_HOME)/interface_packages/dmem_pkg/dmem_filelist_hvl.f 
 
-dmem_PKG_HDL         ?= \
+dmem_PKG_HDL         = \
 	+incdir+$(UVMF_VIP_LIBRARY_HOME)/interface_packages/dmem_pkg \
 	-F $(UVMF_VIP_LIBRARY_HOME)/interface_packages/dmem_pkg/dmem_filelist_hdl.f 
 
-dmem_PKG_XRTL         ?= \
+dmem_PKG_XRTL         = \
 	+incdir+$(UVMF_VIP_LIBRARY_HOME)/interface_packages/dmem_pkg \
 	-F $(UVMF_VIP_LIBRARY_HOME)/interface_packages/dmem_pkg/dmem_filelist_xrtl.f 
 
@@ -40,9 +40,9 @@ endif
 
 export dmem_IF_DPI_SRC ?= $(UVMF_VIP_LIBRARY_HOME)/interface_packages/dmem_pkg/dpi
 
-C_FILE_COMPILE_LIST_dmem_pkg	?= \
+C_FILE_COMPILE_LIST_dmem_pkg	= \
 
-O_FILE_COMPILE_LIST_dmem_pkg ?= $(notdir $(C_FILE_COMPILE_LIST_dmem_pkg:.c=.o))
+O_FILE_COMPILE_LIST_dmem_pkg = $(notdir $(C_FILE_COMPILE_LIST_dmem_pkg:.c=.o))
 
 GCC_COMP_ARGS_dmem_pkg	+= -I$(dmem_IF_DPI_SRC) \
 	-fPIC 

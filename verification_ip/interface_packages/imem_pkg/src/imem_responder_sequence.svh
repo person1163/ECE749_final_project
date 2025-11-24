@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------
-// Created with uvmf_gen version 2023.4_2
+// Created with uvmf_gen version 2023.4
 //----------------------------------------------------------------------
 // pragma uvmf custom header begin
 // pragma uvmf custom header end
@@ -22,14 +22,39 @@ class imem_responder_sequence
   // pragma uvmf custom class_item_additional begin
   // pragma uvmf custom class_item_additional end
 
+  bit flag;
   function new(string name = "imem_responder_sequence");
     super.new(name);
+    flag =0;
   endfunction
 
   task body();
-    req=imem_transaction::type_id::create("req");
+    //initialize all registers
+    for (int i = 0; i < 8; i++) 
+    begin
+      start_item(req);
+      if (!req.randomize()) 
+        `uvm_fatal("SEQ", "imem_random_sequence::body()-imem_transaction randomization failed");
+      
+      req.Instr_dout[15:12] = LEA;
+      req.dr = i;
+      req.Instr_dout = {req.Instr_dout[15:12], req.dr, req.pcoffset9};
+      req.complete_instr = 1;
+      finish_item(req);
+    end
+    
     forever begin
       start_item(req);
+      if(flag == 1'b0) 
+            begin
+              if((!req.randomize() with {req.Instr_dout[15:12] inside {ADD, AND, NOT, BR, JMP, LD, LDI, LDR, LEA, ST, STI, STR};}))`uvm_fatal("SEQ", "imem_random_sequence::body()-imem_transaction randomization failed")
+              req.complete_instr=1;
+            end 
+          else 
+            begin
+              req.complete_instr = 0;
+              req.Instr_dout = 0;
+            end
       finish_item(req);
       // pragma uvmf custom body begin
       // UVMF_CHANGE_ME : Do something here with the resulting req item.  The
@@ -37,7 +62,7 @@ class imem_responder_sequence
       // to be handled by the responder sequence.
       // If this was an item that required a response, the expectation is
       // that the response should be populated within this transaction now.
-      `uvm_info("SEQ",$sformatf("Processed txn: %s",req.convert2string()),UVM_HIGH)
+      `uvm_info("SEQ",$sformatf("Processed txn: %s",req.convert2string()),UVM_MEDIUM)
       // pragma uvmf custom body end
     end
   endtask

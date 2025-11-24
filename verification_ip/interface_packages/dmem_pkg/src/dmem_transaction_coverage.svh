@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------
-// Created with uvmf_gen version 2023.4_2
+// Created with uvmf_gen version 2023.4
 //----------------------------------------------------------------------
 // pragma uvmf custom header begin
 // pragma uvmf custom header end
@@ -44,7 +44,7 @@ class dmem_transaction_coverage  extends uvm_subscriber #(.T(dmem_transaction ))
   function new(string name="", uvm_component parent=null);
     super.new(name,parent);
     dmem_transaction_cg=new;
-    `uvm_warning("COVERAGE_MODEL_REVIEW", "A covergroup has been constructed which may need review because of either generation or re-generation with merging.  Please note that transaction variables added as a result of re-generation and merging are not automatically added to the covergroup.  Remove this warning after the covergroup has been reviewed.")
+    // `uvm_warning("COVERAGE_MODEL_REVIEW", "A covergroup has been constructed which may need review because of either generation or re-generation with merging.  Please note that transaction variables added as a result of re-generation and merging are not automatically added to the covergroup.  Remove this warning after the covergroup has been reviewed.")
   endfunction
 
   // ****************************************************************************

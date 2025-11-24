@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------
-// Created with uvmf_gen version 2023.4_2
+// Created with uvmf_gen version 2023.4
 //----------------------------------------------------------------------
 // pragma uvmf custom header begin
 // pragma uvmf custom header end
@@ -91,17 +91,17 @@ end
 
   // INITIATOR mode input signals
   tri  complete_data_i;
-  reg  complete_data_o = 'b0;
+  reg  complete_data_o = 'bz;
   tri [15:0] Data_dout_i;
-  reg [15:0] Data_dout_o = 'b0;
+  reg [15:0] Data_dout_o = 'bz;
 
   // INITIATOR mode output signals
   tri [15:0] Data_din_i;
-  reg [15:0] Data_din_o = 'b0;
+  reg [15:0] Data_din_o = 'bz;
   tri  Data_rd_i;
-  reg  Data_rd_o = 'b0;
+  reg  Data_rd_o = 'bz;
   tri [15:0] Data_addr_i;
-  reg [15:0] Data_addr_o = 'b0;
+  reg [15:0] Data_addr_o = 'bz;
 
   // Bi-directional signals
   
@@ -155,12 +155,12 @@ end
   always @( posedge reset_i )
      begin
        // RESPONDER mode output signals
-       complete_data_o <= 'b0;
-       Data_dout_o <= 'b0;
+       complete_data_o <= 'bz;
+       Data_dout_o <= 'bz;
        // INITIATOR mode output signals
-       Data_din_o <= 'b0;
-       Data_rd_o <= 'b0;
-       Data_addr_o <= 'b0;
+       Data_din_o <= 'bz;
+       Data_rd_o <= 'bz;
+       Data_addr_o <= 'bz;
        // Bi-directional signals
  
      end    
@@ -292,18 +292,18 @@ bit first_transfer=1;
        //    Responder inout signals
     
   @(posedge clock_i);
-  if (!first_transfer) begin
-    // Perform transfer response here.   
-    // Reply using data recieved in the dmem_responder_struct.
+  while(Data_rd_i === 1'bx) @(posedge clock_i);
+    
+    if(Data_rd_i === 1) begin
+       	Data_dout_o <= dmem_responder_struct.Data_dout;
+	      complete_data_o <= 1'b1 ;
+	  end
+    else if(Data_rd_i === 0) begin
+	    complete_data_o <= 1'b1 ;
+	  end
     @(posedge clock_i);
-    // Reply using data recieved in the transaction handle.
-    @(posedge clock_i);
-  end
-    // Wait for next transfer then gather info from intiator about the transfer.
-    // Place the data into the dmem_initiator_struct.
-    @(posedge clock_i);
-    @(posedge clock_i);
-    first_transfer = 0;
+    complete_data_o <= 1'b0 ;
+    
   endtask
 // pragma uvmf custom respond_and_wait_for_next_transfer end
 

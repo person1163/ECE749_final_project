@@ -113,9 +113,31 @@ import uvmf_base_pkg_hdl::*;
   // pragma uvmf custom dut_instantiation begin
   // UVMF_CHANGE_ME : Add DUT and connect to signals in _bus interfaces listed above
   // Instantiate your DUT here
-  // These DUT's instantiated to show verilog and vhdl instantiation
-  LC3      dut_verilog(   .clk(clk), .rst(rst), .pc(imem_agent_bus.PC), .instrmem_rd(imem_agent_bus.instrmem_rd), .);
-  // pragma uvmf custom dut_instantiation end
+ // pragma uvmf custom dut_instantiation begin
+LC3 dut_verilog (
+    .clk             (clk),
+    .rst             (rst),
+
+    //IMEM
+
+    .pc              (imem_agent_bus.PC),
+    .instrmem_rd     (imem_agent_bus.instrmem_rd),
+
+    .Instr_dout      (imem_agent_bus.Instr_dout),
+    .complete_instr  (imem_agent_bus.complete_instr),
+
+    // DMEM
+    .Data_dout       (dmem_agent_bus.DMem_out),
+    .M_Control       (dmem_agent_bus.MControl),
+    .M_Addr          (dmem_agent_bus.MAddr),
+    .M_Data          (dmem_agent_bus.MData),
+
+    .Data_addr       (dmem_agent_bus.DMem_addr),
+    .Data_din        (dmem_agent_bus.DMem_din),
+    .Data_rd         (dmem_agent_bus.DMem_rd),
+    .memout          (dmem_agent_bus.memout)
+);
+// pragma uvmf custom dut_instantiation end
 
   assign control_control_in_agent_bus.completed_data = dut_verilog.complete_data;
   assign control_control_in_agent_bus.completed_instr = dut_verilog.complete_instr;
