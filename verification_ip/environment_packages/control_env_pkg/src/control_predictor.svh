@@ -84,7 +84,7 @@ class control_predictor #(
   // pragma uvmf custom build_phase begin
   // pragma uvmf custom build_phase end
   endfunction
-
+  bit out;
   // FUNCTION: write_control_in_agent_ae
   // Transactions received through control_in_agent_ae initiate the execution of this function.
   // This function performs prediction of DUT output values based on DUT input, configuration and state
@@ -97,7 +97,7 @@ class control_predictor #(
     scoreboard_ap_output_transaction = scoreboard_ap_output_transaction_t::type_id::create("scoreboard_ap_output_transaction");
     //  UVMF_CHANGE_ME: Implement predictor model here.  
     `uvm_info("UNIMPLEMENTED_PREDICTOR_MODEL", "******************************************************************************************************",UVM_NONE)
-    `uvm_info("UNIMPLEMENTED_PREDICTOR_MODEL", "UVMF_CHANGE_ME: The control_predictor::write_control_in_agent_ae function needs to be completed with DUT prediction model",UVM_NONE)
+    out=controller_model(.complete_data(t.completed_data),.complete_instr(t.completed_instr),.IR(t.IR),.psr(t.PSR),.IR_Exec(t.IR_EXEC),.Imem_dout(t.Imem_dout),.NZP(t.NZP),.enable_updatePC(scoreboard_ap_output_transaction.enable_updatePC),.enable_fetch(scoreboard_ap_output_transaction.enable_fetch),.enable_decode(scoreboard_ap_output_transaction.enable_decode),.enable_execute(scoreboard_ap_output_transaction.enable_execute),.enable_writeback(scoreboard_ap_output_transaction.enable_writeback),.bypass_alu_1(scoreboard_ap_output_transaction.bypass_alu_1),.bypass_alu_2(scoreboard_ap_output_transaction.bypass_alu_2),.bypass_mem_1(scoreboard_ap_output_transaction.bypass_mem_1),.bypass_mem_2(scoreboard_ap_output_transaction.bypass_mem_2),.br_taken(scoreboard_ap_output_transaction.br_taken),.mem_state(scoreboard_ap_output_transaction.mem_state));
     `uvm_info("UNIMPLEMENTED_PREDICTOR_MODEL", "******************************************************************************************************",UVM_NONE)
  
     // Code for sending output transaction out through scoreboard_ap
