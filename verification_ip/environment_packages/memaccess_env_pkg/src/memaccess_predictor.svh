@@ -42,27 +42,27 @@ class memaccess_predictor #(
 
   
   // Instantiate the analysis exports
-  uvm_analysis_imp_memaccess_in_agent #(memaccess_in_transaction, memaccess_predictor #(
+  uvm_analysis_imp_analysis_export #(memaccess_in_transaction, memaccess_predictor #(
                               .CONFIG_T(CONFIG_T),
                               .BASE_T(BASE_T)
                               )
-) memaccess_in_agent_ae;
+) analysis_export;
 
   
   // Instantiate the analysis ports
-  uvm_analysis_port #(memaccess_out_transaction) memaccess_scrbd_pt;
+  uvm_analysis_port #(memaccess_out_transaction) analysis_port;
 
 
   // Transaction variable for predicted values to be sent out analysis_port
   // Once a transaction is sent through an analysis_port, another transaction should
   // be constructed for the next predicted transaction. 
-  typedef memaccess_out_transaction memaccess_scrbd_pt_output_transaction_t;
-  memaccess_scrbd_pt_output_transaction_t memaccess_scrbd_pt_output_transaction;
+  typedef memaccess_out_transaction analysis_port_output_transaction_t;
+  analysis_port_output_transaction_t analysis_port_output_transaction;
   // Code for sending output transaction out through analysis_port
   // analysis_port.write(analysis_port_output_transaction);
 
   // Define transaction handles for debug visibility 
-  memaccess_in_transaction memaccess_in_agent_ae_debug;
+  memaccess_in_transaction analysis_export_debug;
 
 
   // pragma uvmf custom class_item_additional begin
@@ -79,22 +79,23 @@ class memaccess_predictor #(
   // FUNCTION: build_phase
   virtual function void build_phase (uvm_phase phase);
 
-    memaccess_in_agent_ae = new("memaccess_in_agent_ae", this);
-    memaccess_scrbd_pt =new("memaccess_scrbd_pt", this );
+    analysis_export = new("analysis_export", this);
+    analysis_port =new("analysis_port", this );
   // pragma uvmf custom build_phase begin
   // pragma uvmf custom build_phase end
   endfunction
-
+  bit out;
+    
   // FUNCTION: write_analysis_export
   // Transactions received through analysis_export initiate the execution of this function.
   // This function performs prediction of DUT output values based on DUT input, configuration and state
   virtual function void write_analysis_export(memaccess_in_transaction t);
     // pragma uvmf custom analysis_export_predictor begin
-    memaccess_in_agent_ae_debug = t;
+    analysis_export_debug = t;
     `uvm_info("PRED", "Transaction Received through analysis_export", UVM_MEDIUM)
     `uvm_info("PRED", {"            Data: ",t.convert2string()}, UVM_FULL)
     // Construct one of each output transaction type.
-    memaccess_scrbd_pt_output_transaction = memaccess_scrbd_pt_output_transaction_t::type_id::create("memaccess_scrbd_pt_output_transaction");
+    analysis_port_output_transaction = analysis_port_output_transaction_t::type_id::create("analysis_port_output_transaction");
     //  UVMF_CHANGE_ME: Implement predictor model here.  
     `uvm_info("UNIMPLEMENTED_PREDICTOR_MODEL", "******************************************************************************************************",UVM_NONE)
     `uvm_info("UNIMPLEMENTED_PREDICTOR_MODEL", "UVMF_CHANGE_ME: The memaccess_predictor::write_analysis_export function needs to be completed with DUT prediction model",UVM_NONE)
@@ -105,8 +106,8 @@ class memaccess_predictor #(
     // broadcasted transactions.  Creation of a different object is done by constructing the transaction 
     // using either new() or create().  Broadcasting a transaction object more than once to either the 
     // same subscriber or multiple subscribers will result in unexpected and incorrect behavior.
-    //memaccess_model(.M_Data(t.M_Data), .M_Addr(t.M_addr), .M_Control(t.M_Control), .mem_state(t.mem_state), .DMem_dout(t.DMem_dout), .DMem_addr(pred_to_scrbd_output_transaction.DMem_addr), .DMem_din(pred_to_scrbd_output_transaction.DMem_din), .memout(pred_to_scrbd_output_transaction.memout), .DMem_rd(pred_to_scrbd_output_transaction.DMem_rd));
-    memaccess_scrbd_pt.write(memaccess_scrbd_pt_output_transaction);
+    out = memaccess_model(.M_Data(t.M_Data), .M_Addr(t.M_addr), .M_Control(t.M_Control), .mem_state(t.mem_state), .DMem_dout(t.DMem_dout), .DMem_addr(analysis_port_output_transaction.DMem_addr), .DMem_din(analysis_port_output_transaction.DMem_din), .memout(analysis_port_output_transaction.memout), .DMem_rd(analysis_port_output_transaction.DMem_rd));
+    analysis_port.write(analysis_port_output_transaction);
     // pragma uvmf custom analysis_export_predictor end
   endfunction
 
