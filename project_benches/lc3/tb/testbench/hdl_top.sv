@@ -115,27 +115,22 @@ import uvmf_base_pkg_hdl::*;
   // Instantiate your DUT here
  // pragma uvmf custom dut_instantiation begin
 LC3 dut_verilog (
-    .clk             (clk),
-    .rst             (rst),
+    .clock            (clk),
+    .reset            (rst),
 
     //IMEM
 
     .pc              (imem_agent_bus.PC),
     .instrmem_rd     (imem_agent_bus.instrmem_rd),
-
     .Instr_dout      (imem_agent_bus.Instr_dout),
     .complete_instr  (imem_agent_bus.complete_instr),
 
     // DMEM
-    .Data_dout       (dmem_agent_bus.DMem_out),
-    .M_Control       (dmem_agent_bus.MControl),
-    .M_Addr          (dmem_agent_bus.MAddr),
-    .M_Data          (dmem_agent_bus.MData),
-
-    .Data_addr       (dmem_agent_bus.DMem_addr),
-    .Data_din        (dmem_agent_bus.DMem_din),
-    .Data_rd         (dmem_agent_bus.DMem_rd),
-    .memout          (dmem_agent_bus.memout)
+    .Data_dout       (dmem_agent_bus.Data_dout),
+    .Data_addr       (dmem_agent_bus.Data_addr),
+    .Data_din        (dmem_agent_bus.Data_din),
+    .Data_rd         (dmem_agent_bus.Data_rd),
+    .complete_data   (dmem_agent_bus.complete_data)
 );
 // pragma uvmf custom dut_instantiation end
 
@@ -161,7 +156,7 @@ LC3 dut_verilog (
 
 //memaccess connections:
   assign memaccess_memaccess_in_agent_bus.MControl = dut_verilog.M_Control; 
-  assign memaccess_memaccess_in_agent_bus.MAddr = dut_verilog.M_Addr;
+  assign memaccess_memaccess_in_agent_bus.MAddr = dut_verilog.pcout;
   assign memaccess_memaccess_in_agent_bus.MData = dut_verilog.M_Data;
   assign memaccess_memaccess_in_agent_bus.DMem_out = dut_verilog.Data_dout;
   assign memaccess_memaccess_in_agent_bus.mem_state = dut_verilog.mem_state;
@@ -174,12 +169,12 @@ LC3 dut_verilog (
 // Fetch connections
   assign fetch_fetch_in_agent_bus.br_taken = dut_verilog.br_taken;
   assign fetch_fetch_in_agent_bus.enable_fetch = dut_verilog.enable_fetch;
-  assign fetch_fetch_in_agent_bus.enable_updatePC = dut_verilog.enable_updatePC
+  assign fetch_fetch_in_agent_bus.enable_updatePC = dut_verilog.enable_updatePC;
   assign fetch_fetch_in_agent_bus.taddr = dut_verilog.taddr;
 
   assign fetch_fetch_out_agent_bus.instrmem_rd = dut_verilog.instrmem_rd;
   assign fetch_fetch_out_agent_bus.pc = dut_verilog.pc;
-  assign fetch_fetch_out_agent_bus.npc = dut_verilog.npc_out;
+  assign fetch_fetch_out_agent_bus.npc = dut_verilog.npc_out_fetch;
 
   initial begin      // tbx vif_binding_block 
     import uvm_pkg::uvm_config_db;
@@ -203,4 +198,3 @@ endmodule
 
 // pragma uvmf custom external begin
 // pragma uvmf custom external end
-

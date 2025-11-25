@@ -21,8 +21,6 @@
 //  fetch_sb_ap broadcasts transactions of type fetch_out_transaction
 //----------------------------------------------------------------------
 //----------------------------------------------------------------------
-//
-
 class fetch_predictor #(
   type CONFIG_T,
   type BASE_T = uvm_component
@@ -84,7 +82,7 @@ class fetch_predictor #(
   // pragma uvmf custom build_phase begin
   // pragma uvmf custom build_phase end
   endfunction
-
+  bit out;
   // FUNCTION: write_fetch_in_agent_ae
   // Transactions received through fetch_in_agent_ae initiate the execution of this function.
   // This function performs prediction of DUT output values based on DUT input, configuration and state
@@ -99,7 +97,7 @@ class fetch_predictor #(
     // `uvm_info("UNIMPLEMENTED_PREDICTOR_MODEL", "******************************************************************************************************",UVM_NONE)
     // `uvm_info("UNIMPLEMENTED_PREDICTOR_MODEL", "UVMF_CHANGE_ME: The fetch_predictor::write_fetch_in_agent_ae function needs to be completed with DUT prediction model",UVM_NONE)
     // `uvm_info("UNIMPLEMENTED_PREDICTOR_MODEL", "******************************************************************************************************",UVM_NONE)
-    fetch_model(t.enable_updatePC, t.enable_fetch, t.br_taken, t.taddr,
+    out = fetch_model(t.enable_updatePC, t.enable_fetch, t.br_taken, t.taddr,
     fetch_sb_ap_output_transaction.npc, fetch_sb_ap_output_transaction.pc, fetch_sb_ap_output_transaction.instrmem_rd);
  
     // Code for sending output transaction out through fetch_sb_ap

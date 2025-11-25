@@ -23,6 +23,7 @@ package memaccess_env_pkg;
   import uvm_pkg::*;
   `include "uvm_macros.svh"
   import uvmf_base_pkg::*;
+  import lc3_prediction_pkg::*;
   import memaccess_in_pkg::*;
   import memaccess_out_pkg::*;
   import memaccess_in_pkg::*;

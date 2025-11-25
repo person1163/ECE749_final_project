@@ -17,7 +17,7 @@
 # This variable points to release code that is not user modified.
 # This variable allows for UVMF release directories to reside independent of project related verification IP and project bench directories.
 # This code below looks "upward" for directory starting with UVMF_* and returns first match for use with the release examples.
-export UVMF_HOME ?= ___PLEASE_SET_AN_ENVIRONMENT_VARIABLE_NAMED_UVMF_HOME_TO_POINT_TO_THE_UVMF_INSTALLATION___
+export UVMF_HOME ?= /mnt/ncsudrive/k/ksuthar/ece_748/proj3/UVMF_2023.4_2/
 
 # pragma uvmf custom exports begin
 #
@@ -127,7 +127,14 @@ $(UVMF_PROJECT_DIR)/tb/tests/lc3_tests_pkg.sv
 # pragma uvmf custom dut_files begin
 # UVMF_CHANGE_ME : Reference Verilog DUT source.
 lc3_VERILOG_DUT ?=\
-$(UVMF_PROJECT_DIR)/rtl/verilog/verilog_dut.v
+$(UVMF_PROJECT_DIR)/rtl/verilog/data_defs.v\
+$(UVMF_PROJECT_DIR)/rtl/verilog/Fetch.v\
+$(UVMF_PROJECT_DIR)/rtl/verilog/Decode_Pipelined.v\
+$(UVMF_PROJECT_DIR)/rtl/verilog/Execute.v\
+$(UVMF_PROJECT_DIR)/rtl/verilog/WriteBack.v\
+$(UVMF_PROJECT_DIR)/rtl/verilog/Mem_Access.v\
+$(UVMF_PROJECT_DIR)/rtl/verilog/Controller_Pipeline.v\
+$(UVMF_PROJECT_DIR)/rtl/verilog/TopLevelLC3.v\
 
 # UVMF_CHANGE_ME : Reference VHDL DUT source.
 lc3_VHDL_DUT ?=\
@@ -148,16 +155,15 @@ q_comp_lc3_parameters_pkg:
 v_comp_lc3_parameters_pkg: q_comp_lc3_parameters_pkg
 	$(HDL_COMP_CMD) +incdir+$(UVMF_PROJECT_DIR)/tb/parameters $(lc3_PARAMETERS_PKG)
  
-
+comp_lc3_prediction_pkg:
+	vlog -sv +incdir+../../../verification_ip/environment_packages/lc3_prediction_pkg \
+	../../../verification_ip/environment_packages/lc3_prediction_pkg/lc3_prediction_pkg.sv	
+ 
 comp_lc3_sequence_pkg:
 	$(HVL_COMP_CMD) +incdir+$(UVMF_PROJECT_DIR)/tb/sequences $(lc3_SEQUENCES_PKG)
 
 comp_lc3_tests_pkg:
 	$(HVL_COMP_CMD) +incdir+$(UVMF_PROJECT_DIR)/tb/tests $(lc3_TEST_PKG)
-	
-comp_lc3_prediction_pkg:
-	vlog -sv +incdir+../../../verification_ip/environment_packages/lc3_prediction_pkg \
-	../../../verification_ip/environment_packages/lc3_prediction_pkg/lc3_prediction_pkg.sv	
 
 # pragma uvmf custom dut_compile_make_target begin
 # UVMF_CHANGE_ME : Add make target to compile your verilog dut here
@@ -193,7 +199,7 @@ comp_hvl : comp_hvl_core
 
 
 comp_hvl_core :   \
-	 comp_fetch_in_pkg  comp_fetch_out_pkg  comp_memaccess_in_pkg  comp_memaccess_out_pkg  comp_control_in_pkg  comp_control_out_pkg  comp_imem_pkg  comp_dmem_pkg  \
+	comp_lc3_prediction_pkg comp_fetch_in_pkg  comp_fetch_out_pkg  comp_memaccess_in_pkg  comp_memaccess_out_pkg  comp_control_in_pkg  comp_control_out_pkg  comp_imem_pkg  comp_dmem_pkg  \
 	comp_lc3_env_pkg \
 	comp_lc3_parameters_pkg comp_lc3_sequence_pkg comp_lc3_tests_pkg 
 
@@ -215,4 +221,3 @@ emu_build: libs build link optimize
 
 # pragma uvmf custom additional_targets begin
 # pragma uvmf custom additional_targets end
-
