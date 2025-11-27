@@ -169,7 +169,7 @@ end
     //    How to assign a struct member, named xyz, from a signal.   
     //    All available input signals listed.
          control_in_monitor_struct.completed_data = completed_data_i;  //     
-         control_in_monitor_struct.complete_instr = completed_instr_i;  //     
+         control_in_monitor_struct.completed_instr = completed_instr_i;  //     
          control_in_monitor_struct.IR = IR_i;  //    [15:0] 
          control_in_monitor_struct.NZP = NZP_i;  //    [2:0] 
          control_in_monitor_struct.PSR = PSR_i;  //    [2:0] 
