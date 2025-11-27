@@ -110,8 +110,8 @@ end
   reg  bypass_mem_1_o = 'bz;
   tri  bypass_mem_2_i;
   reg  bypass_mem_2_o = 'bz;
-  tri  mem_state_i;
-  reg  mem_state_o = 'bz;
+  tri [1:0] mem_state_i;
+  reg [1:0] mem_state_o = 'bz;
 
   // INITIATOR mode output signals
 
@@ -272,7 +272,7 @@ end
        //      control_out_responder_struct.xyz = bypass_alu_2_i;  //     
        //      control_out_responder_struct.xyz = bypass_mem_1_i;  //     
        //      control_out_responder_struct.xyz = bypass_mem_2_i;  //     
-       //      control_out_responder_struct.xyz = mem_state_i;  //     
+       //      control_out_responder_struct.xyz = mem_state_i;  //    [1:0] 
        //    Initiator inout signals
        //    How to assign a signal from an initiator struct member named xyz.   
        //    All available initiator output and inout signals listed.
@@ -354,7 +354,7 @@ bit first_transfer=1;
        //      bypass_alu_2_o <= control_out_responder_struct.xyz;  //     
        //      bypass_mem_1_o <= control_out_responder_struct.xyz;  //     
        //      bypass_mem_2_o <= control_out_responder_struct.xyz;  //     
-       //      mem_state_o <= control_out_responder_struct.xyz;  //     
+       //      mem_state_o <= control_out_responder_struct.xyz;  //    [1:0] 
        //    Responder inout signals
     
   @(posedge clock_i);

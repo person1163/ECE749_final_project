@@ -79,7 +79,7 @@ end
   tri  bypass_alu_2_i;
   tri  bypass_mem_1_i;
   tri  bypass_mem_2_i;
-  tri  mem_state_i;
+  tri [1:0] mem_state_i;
   assign clock_i = bus.clock;
   assign reset_i = bus.reset;
   assign enable_updatePC_i = bus.enable_updatePC;
@@ -131,7 +131,8 @@ end
   
   // ****************************************************************************              
   initial begin                                                                             
-    @go;                                                                                   
+    @go;
+    #50;                                                                                   
     forever begin                                                                        
       @(posedge clock_i);  
       do_monitor( control_out_monitor_struct );
@@ -180,17 +181,17 @@ end
     //    
     //    How to assign a struct member, named xyz, from a signal.   
     //    All available input signals listed.
-    //      control_out_monitor_struct.xyz = enable_updatePC_i;  //     
-    //      control_out_monitor_struct.xyz = enable_fetch_i;  //     
-    //      control_out_monitor_struct.xyz = enable_decode_i;  //     
-    //      control_out_monitor_struct.xyz = enable_execute_i;  //     
-    //      control_out_monitor_struct.xyz = enable_writeback_i;  //     
-    //      control_out_monitor_struct.xyz = br_taken_i;  //     
-    //      control_out_monitor_struct.xyz = bypass_alu_1_i;  //     
-    //      control_out_monitor_struct.xyz = bypass_alu_2_i;  //     
-    //      control_out_monitor_struct.xyz = bypass_mem_1_i;  //     
-    //      control_out_monitor_struct.xyz = bypass_mem_2_i;  //     
-    //      control_out_monitor_struct.xyz = mem_state_i;  //     
+         control_out_monitor_struct.enable_updatePC = enable_updatePC_i;  //     
+         control_out_monitor_struct.enable_fetch = enable_fetch_i;  //     
+         control_out_monitor_struct.enable_decode = enable_decode_i;  //     
+         control_out_monitor_struct.enable_execute = enable_execute_i;  //     
+         control_out_monitor_struct.enable_writeback = enable_writeback_i;  //     
+         control_out_monitor_struct.br_taken = br_taken_i;  //     
+         control_out_monitor_struct.bypass_alu_1 = bypass_alu_1_i;  //     
+         control_out_monitor_struct.bypass_alu_2 = bypass_alu_2_i;  //     
+         control_out_monitor_struct.bypass_mem_1 = bypass_mem_1_i;  //     
+         control_out_monitor_struct.bypass_mem_2 = bypass_mem_2_i;  //     
+         control_out_monitor_struct.mem_state = mem_state_i;  //    [1:0] 
     // pragma uvmf custom do_monitor begin
     // UVMF_CHANGE_ME : Implement protocol monitoring.  The commented reference code 
     // below are examples of how to capture signal values and assign them to 
@@ -199,10 +200,7 @@ end
     // task should return when a complete transfer has been observed.  Once this task is
     // exited with captured values, it is then called again to wait for and observe 
     // the next transfer. One clock cycle is consumed between calls to do_monitor.
-    @(posedge clock_i);
-    @(posedge clock_i);
-    @(posedge clock_i);
-    @(posedge clock_i);
+
     // pragma uvmf custom do_monitor end
   endtask         
   

@@ -49,7 +49,7 @@ interface  control_out_if
   inout tri  bypass_alu_2,
   inout tri  bypass_mem_1,
   inout tri  bypass_mem_2,
-  inout tri  mem_state
+  inout tri [1:0] mem_state
   );
 
 modport monitor_port 

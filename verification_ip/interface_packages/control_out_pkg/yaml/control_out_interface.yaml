@@ -55,7 +55,7 @@ uvmf:
       - dir: input
         name: mem_state
         reset_value: '''bz'
-        width: '1'
+        width: '2'
       reset: reset
       reset_assertion_level: 'True'
       transaction_constraints: []

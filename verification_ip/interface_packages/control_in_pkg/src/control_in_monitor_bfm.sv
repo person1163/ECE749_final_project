@@ -123,8 +123,10 @@ end
   
   // ****************************************************************************              
   initial begin                                                                             
-    @go;                                                                                   
-    forever begin                                                                        
+    @go;   
+    #50;                                                                                
+    forever begin    
+
       @(posedge clock_i);  
       do_monitor( control_in_monitor_struct );
                                                                  
