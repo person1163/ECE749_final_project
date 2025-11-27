@@ -152,7 +152,7 @@ end
   // ****************************************************************************
 // pragma uvmf custom reset_condition_and_response begin
   // Always block used to return signals to reset value upon assertion of reset
-  always @( negedge reset_i )
+  always @( posedge reset_i )
      begin
        // RESPONDER mode output signals
        DMem_out_o <= 'b0;
