@@ -33,7 +33,6 @@ import uvmf_base_pkg_hdl::*;
   // tbx clkgen
   initial begin
     clk = 0;
-    #5ns;
     forever begin
       clk = ~clk;
       #5ns;
@@ -61,32 +60,68 @@ import uvmf_base_pkg_hdl::*;
   // The driver, driver_bfm, drives transactions onto the bus, _if.
   fetch_in_if  fetch_fetch_in_agent_bus(
      // pragma uvmf custom fetch_fetch_in_agent_bus_connections begin
-     .clk(clk), .reset(rst)
+     .clk(clk), .reset(rst),
+       .br_taken(dut_verilog.br_taken),
+      .enable_fetch (dut_verilog.enable_fetch),
+      .enable_updatePC(dut_verilog.enable_updatePC),
+       .taddr(dut_verilog.taddr)
      // pragma uvmf custom fetch_fetch_in_agent_bus_connections end
      );
   fetch_out_if  fetch_fetch_out_agent_bus(
      // pragma uvmf custom fetch_fetch_out_agent_bus_connections begin
-     .clk(clk), .rst(rst)
+     .clk(clk), .rst(rst),
+       .instrmem_rd (dut_verilog.instrmem_rd),
+       .pc(dut_verilog.pc),
+      .npc ( dut_verilog.npc_out_fetch)
      // pragma uvmf custom fetch_fetch_out_agent_bus_connections end
      );
   memaccess_in_if  memaccess_memaccess_in_agent_bus(
      // pragma uvmf custom memaccess_memaccess_in_agent_bus_connections begin
-     .clock(clk), .reset(rst)
+     .clock(clk), .reset(rst),
+    .MControl ( dut_verilog.M_Control),
+    .MAddr(dut_verilog.pcout),
+    .MData(dut_verilog.M_Data),
+    .DMem_out (dut_verilog.Data_dout),
+    .mem_state ( dut_verilog.mem_state)
      // pragma uvmf custom memaccess_memaccess_in_agent_bus_connections end
      );
   memaccess_out_if  memaccess_memaccess_out_agent_bus(
      // pragma uvmf custom memaccess_memaccess_out_agent_bus_connections begin
-     .clock(clk), .reset(rst)
+     .clock(clk), .reset(rst),
+     
+   .DMem_addr(dut_verilog.Data_addr),
+  .DMem_din ( dut_verilog.Data_din),
+  .memout(dut_verilog.memout),
+  .DMem_rd(dut_verilog.Data_rd)
      // pragma uvmf custom memaccess_memaccess_out_agent_bus_connections end
      );
   control_in_if  control_control_in_agent_bus(
      // pragma uvmf custom control_control_in_agent_bus_connections begin
-     .clock(clk), .reset(rst)
+     .clock(clk), .reset(rst),
+     .completed_data (dut_verilog.complete_data),
+     .completed_instr  (dut_verilog.complete_instr),
+    .IR  (dut_verilog.IR),
+    .IR_EXEC  (dut_verilog.IR_Exec),
+    .PSR (dut_verilog.psr),
+    .NZP (dut_verilog.NZP),
+    .Imem_dout (dut_verilog.Instr_dout)
      // pragma uvmf custom control_control_in_agent_bus_connections end
      );
   control_out_if  control_control_out_agent_bus(
      // pragma uvmf custom control_control_out_agent_bus_connections begin
-     .clock(clk), .reset(rst)
+     .clock(clk), .reset(rst),
+     
+  .enable_updatePC (dut_verilog.enable_updatePC),
+  .bypass_alu_1 (dut_verilog.bypass_alu_1),
+  .bypass_alu_2 (dut_verilog.bypass_alu_2),
+  .bypass_mem_1 (dut_verilog.bypass_mem_1),
+  .bypass_mem_2 (dut_verilog.bypass_mem_2),
+  .enable_fetch (dut_verilog.enable_fetch),
+  .enable_decode (dut_verilog.enable_decode),
+  .enable_execute (dut_verilog.enable_execute),
+  .enable_writeback (dut_verilog.enable_writeback),
+  .mem_state (dut_verilog.mem_state),
+  .br_taken  (dut_verilog.br_taken)
      // pragma uvmf custom control_control_out_agent_bus_connections end
      );
   imem_if  imem_agent_bus(
@@ -134,47 +169,7 @@ LC3 dut_verilog (
 );
 // pragma uvmf custom dut_instantiation end
 
-  assign control_control_in_agent_bus.completed_data = dut_verilog.complete_data;
-  assign control_control_in_agent_bus.completed_instr = dut_verilog.complete_instr;
-  assign control_control_in_agent_bus.IR = dut_verilog.IR;
-  assign control_control_in_agent_bus.IR_EXEC = dut_verilog.IR_Exec;
-  assign control_control_in_agent_bus.PSR = dut_verilog.psr;
-  assign control_control_in_agent_bus.NZP = dut_verilog.NZP;
-  assign control_control_in_agent_bus.Imem_dout = dut_verilog.Instr_dout;
-  assign control_control_out_agent_bus.enable_updatePC = dut_verilog.enable_updatePC;
-  assign control_control_out_agent_bus.bypass_alu_1 = dut_verilog.bypass_alu_1;
-  assign control_control_out_agent_bus.bypass_alu_2 = dut_verilog.bypass_alu_2;
-  assign control_control_out_agent_bus.bypass_mem_1 = dut_verilog.bypass_mem_1;
-  assign control_control_out_agent_bus.bypass_mem_2 = dut_verilog.bypass_mem_2;
-  assign control_control_out_agent_bus.enable_fetch = dut_verilog.enable_fetch;
-  assign control_control_out_agent_bus.enable_decode = dut_verilog.enable_decode;
-  assign control_control_out_agent_bus.enable_execute = dut_verilog.enable_execute;
-  assign control_control_out_agent_bus.enable_writeback = dut_verilog.enable_writeback;
-  assign control_control_out_agent_bus.mem_state = dut_verilog.mem_state;
-  assign control_control_out_agent_bus.br_taken = dut_verilog.br_taken;
 
-
-//memaccess connections:
-  assign memaccess_memaccess_in_agent_bus.MControl = dut_verilog.M_Control; 
-  assign memaccess_memaccess_in_agent_bus.MAddr = dut_verilog.pcout;
-  assign memaccess_memaccess_in_agent_bus.MData = dut_verilog.M_Data;
-  assign memaccess_memaccess_in_agent_bus.DMem_out = dut_verilog.Data_dout;
-  assign memaccess_memaccess_in_agent_bus.mem_state = dut_verilog.mem_state;
-
-  assign memaccess_memaccess_out_agent_bus.DMem_addr = dut_verilog.Data_addr; 
-  assign memaccess_memaccess_out_agent_bus.DMem_din = dut_verilog.Data_din;
-  assign memaccess_memaccess_out_agent_bus.memout = dut_verilog.memout;
-  assign memaccess_memaccess_out_agent_bus.DMem_rd = dut_verilog.Data_rd;
-
-// Fetch connections
-  assign fetch_fetch_in_agent_bus.br_taken = dut_verilog.br_taken;
-  assign fetch_fetch_in_agent_bus.enable_fetch = dut_verilog.enable_fetch;
-  assign fetch_fetch_in_agent_bus.enable_updatePC = dut_verilog.enable_updatePC;
-  assign fetch_fetch_in_agent_bus.taddr = dut_verilog.taddr;
-
-  assign fetch_fetch_out_agent_bus.instrmem_rd = dut_verilog.instrmem_rd;
-  assign fetch_fetch_out_agent_bus.pc = dut_verilog.pc;
-  assign fetch_fetch_out_agent_bus.npc = dut_verilog.npc_out_fetch;
 
   initial begin      // tbx vif_binding_block 
     import uvm_pkg::uvm_config_db;

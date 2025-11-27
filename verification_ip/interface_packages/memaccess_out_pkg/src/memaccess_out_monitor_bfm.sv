@@ -73,14 +73,12 @@ end
   tri [15:0] DMem_din_i;
   tri [15:0] memout_i;
   tri  DMem_rd_i;
-  tri [1:0] mem_state_i;
   assign clock_i = bus.clock;
   assign reset_i = bus.reset;
   assign DMem_addr_i = bus.DMem_addr;
   assign DMem_din_i = bus.DMem_din;
   assign memout_i = bus.memout;
   assign DMem_rd_i = bus.DMem_rd;
-  assign mem_state_i = bus.mem_state;
 
   // Proxy handle to UVM monitor
   memaccess_out_pkg::memaccess_out_monitor  proxy;
@@ -165,7 +163,6 @@ end
     //      memaccess_out_monitor_struct.xyz = DMem_din_i;  //    [15:0] 
     //      memaccess_out_monitor_struct.xyz = memout_i;  //    [15:0] 
     //      memaccess_out_monitor_struct.xyz = DMem_rd_i;  //     
-    //      memaccess_out_monitor_struct.xyz = mem_state_i;  //    [1:0] 
     // pragma uvmf custom do_monitor begin
     // UVMF_CHANGE_ME : Implement protocol monitoring.  The commented reference code 
     // below are examples of how to capture signal values and assign them to 

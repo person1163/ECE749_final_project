@@ -98,8 +98,6 @@ end
   reg [15:0] memout_o = 'b0;
   tri  DMem_rd_i;
   reg  DMem_rd_o = 'b0;
-  tri [1:0] mem_state_i;
-  reg [1:0] mem_state_o = 'b0;
 
   // INITIATOR mode output signals
 
@@ -119,8 +117,6 @@ end
   assign bus.memout = (initiator_responder == RESPONDER) ? memout_o : 'bz;
   assign DMem_rd_i = bus.DMem_rd;
   assign bus.DMem_rd = (initiator_responder == RESPONDER) ? DMem_rd_o : 'bz;
-  assign mem_state_i = bus.mem_state;
-  assign bus.mem_state = (initiator_responder == RESPONDER) ? mem_state_o : 'bz;
 
 
   // These are signals marked as 'output' by the config file, but the outputs will
@@ -159,7 +155,6 @@ end
        DMem_din_o <= 'b0;
        memout_o <= 'b0;
        DMem_rd_o <= 'b0;
-       mem_state_o <= 'b0;
        // INITIATOR mode output signals
        // Bi-directional signals
  
@@ -222,7 +217,6 @@ end
        //      memaccess_out_responder_struct.xyz = DMem_din_i;  //    [15:0] 
        //      memaccess_out_responder_struct.xyz = memout_i;  //    [15:0] 
        //      memaccess_out_responder_struct.xyz = DMem_rd_i;  //     
-       //      memaccess_out_responder_struct.xyz = mem_state_i;  //    [1:0] 
        //    Initiator inout signals
        //    How to assign a signal from an initiator struct member named xyz.   
        //    All available initiator output and inout signals listed.
@@ -284,7 +278,6 @@ bit first_transfer=1;
        //      DMem_din_o <= memaccess_out_responder_struct.xyz;  //    [15:0] 
        //      memout_o <= memaccess_out_responder_struct.xyz;  //    [15:0] 
        //      DMem_rd_o <= memaccess_out_responder_struct.xyz;  //     
-       //      mem_state_o <= memaccess_out_responder_struct.xyz;  //    [1:0] 
        //    Responder inout signals
     
   @(posedge clock_i);
