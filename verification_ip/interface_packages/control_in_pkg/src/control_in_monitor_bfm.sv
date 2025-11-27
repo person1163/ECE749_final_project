@@ -168,13 +168,13 @@ end
     //    
     //    How to assign a struct member, named xyz, from a signal.   
     //    All available input signals listed.
-    //      control_in_monitor_struct.xyz = completed_data_i;  //     
-    //      control_in_monitor_struct.xyz = completed_instr_i;  //     
-    //      control_in_monitor_struct.xyz = IR_i;  //    [15:0] 
-    //      control_in_monitor_struct.xyz = NZP_i;  //    [2:0] 
-    //      control_in_monitor_struct.xyz = PSR_i;  //    [2:0] 
-    //      control_in_monitor_struct.xyz = IR_EXEC_i;  //    [15:0] 
-    //      control_in_monitor_struct.xyz = Imem_dout_i;  //    [15:0] 
+         control_in_monitor_struct.completed_data = completed_data_i;  //     
+         control_in_monitor_struct.complete_instr = completed_instr_i;  //     
+         control_in_monitor_struct.IR = IR_i;  //    [15:0] 
+         control_in_monitor_struct.NZP = NZP_i;  //    [2:0] 
+         control_in_monitor_struct.PSR = PSR_i;  //    [2:0] 
+         control_in_monitor_struct.IR_EXEC = IR_EXEC_i;  //    [15:0] 
+         control_in_monitor_struct.Imem_dout = Imem_dout_i;  //    [15:0] 
     // pragma uvmf custom do_monitor begin
     // UVMF_CHANGE_ME : Implement protocol monitoring.  The commented reference code 
     // below are examples of how to capture signal values and assign them to 
@@ -183,10 +183,6 @@ end
     // task should return when a complete transfer has been observed.  Once this task is
     // exited with captured values, it is then called again to wait for and observe 
     // the next transfer. One clock cycle is consumed between calls to do_monitor.
-    @(posedge clock_i);
-    @(posedge clock_i);
-    @(posedge clock_i);
-    @(posedge clock_i);
     // pragma uvmf custom do_monitor end
   endtask         
   
