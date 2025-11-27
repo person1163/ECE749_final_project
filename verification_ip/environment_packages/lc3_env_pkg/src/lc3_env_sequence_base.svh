@@ -31,21 +31,17 @@ class lc3_env_sequence_base #(
 // Available sequencer handles within the environment configuration:
 
   // Initiator agent sequencers in lc3_environment:
-    // configuration.imem_agent_config.sequencer
-    // configuration.dmem_agent_config.sequencer
 
   // Responder agent sequencers in lc3_environment:
+    // configuration.imem_agent_config.sequencer
+    // configuration.dmem_agent_config.sequencer
 
   // Virtual sequencers in sub-environments located in sub-environment configuration
     // configuration.fetch_config.vsqr
     // configuration.memaccess_config.vsqr
     // configuration.control_config.vsqr
 
-    typedef imem_random_sequence imem_agent_random_sequence_t;
-    imem_agent_random_sequence_t imem_agent_rand_seq;
 
-    typedef dmem_random_sequence dmem_agent_random_sequence_t;
-    dmem_agent_random_sequence_t dmem_agent_rand_seq;
 
 
 // This example shows how to use the environment sequence base for sub-environments
@@ -77,8 +73,6 @@ class lc3_env_sequence_base #(
   
   function new(string name = "" );
     super.new(name);
-    imem_agent_rand_seq = imem_agent_random_sequence_t::type_id::create("imem_agent_rand_seq");
-    dmem_agent_rand_seq = dmem_agent_random_sequence_t::type_id::create("dmem_agent_rand_seq");
 
 //     fetch_seq = fetch_sequence_base_t::type_id::create("fetch_seq");
 //     memaccess_seq = memaccess_sequence_base_t::type_id::create("memaccess_seq");
@@ -89,10 +83,6 @@ class lc3_env_sequence_base #(
   virtual task body();
 
   
-    if ( configuration.imem_agent_config.sequencer != null )
-       repeat (25) imem_agent_rand_seq.start(configuration.imem_agent_config.sequencer);
-    if ( configuration.dmem_agent_config.sequencer != null )
-       repeat (25) dmem_agent_rand_seq.start(configuration.dmem_agent_config.sequencer);
 
 //     fetch_seq.start(configuration.fetch_config.vsqr);
 //     memaccess_seq.start(configuration.memaccess_config.vsqr);

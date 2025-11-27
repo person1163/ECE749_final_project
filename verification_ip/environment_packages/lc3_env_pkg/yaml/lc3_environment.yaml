@@ -2,10 +2,10 @@ uvmf:
   environments:
     lc3:
       agents:
-      - initiator_responder: INITIATOR
+      - initiator_responder: RESPONDER
         name: imem_agent
         type: imem
-      - initiator_responder: INITIATOR
+      - initiator_responder: RESPONDER
         name: dmem_agent
         type: dmem
       analysis_components: []
