@@ -28,7 +28,10 @@ class imem_responder_sequence
     flag =0;
   endfunction
 
-  task body();
+task body();
+    bit responder_count = 0;
+    bit max_responder_transactions = 400;  // Configurable limit
+    
     //initialize all registers
     for (int i = 0; i < 8; i++) 
     begin
@@ -43,28 +46,25 @@ class imem_responder_sequence
       finish_item(req);
     end
     
-    forever begin
+    // CHANGE: Use repeat instead of forever
+    repeat(max_responder_transactions) begin
       start_item(req);
       if(flag == 1'b0) 
-            begin
-              if((!req.randomize() with {req.Instr_dout[15:12] inside {ADD, AND, NOT, BR, JMP, LD, LDI, LDR, LEA, ST, STI, STR};}))`uvm_fatal("SEQ", "imem_random_sequence::body()-imem_transaction randomization failed")
-              req.complete_instr=1;
-            end 
-          else 
-            begin
-              req.complete_instr = 0;
-              req.Instr_dout = 0;
-            end
+        begin
+          if((!req.randomize() with {req.Instr_dout[15:12] inside {ADD, AND, NOT, BR, JMP, LD, LDI, LDR, LEA, ST, STI, STR};}))`uvm_fatal("SEQ", "imem_random_sequence::body()-imem_transaction randomization failed")
+          req.complete_instr=1;
+        end 
+      else 
+        begin
+          req.complete_instr = 0;
+          req.Instr_dout = 0;
+        end
       finish_item(req);
-      // pragma uvmf custom body begin
-      // UVMF_CHANGE_ME : Do something here with the resulting req item.  The
-      // finish_item() call above will block until the req transaction is ready
-      // to be handled by the responder sequence.
-      // If this was an item that required a response, the expectation is
-      // that the response should be populated within this transaction now.
       `uvm_info("SEQ",$sformatf("Processed txn: %s",req.convert2string()),UVM_MEDIUM)
-      // pragma uvmf custom body end
+      responder_count++;
     end
+    
+    `uvm_info("SEQ", $sformatf("Responder sequence completed after %0d transactions", responder_count), UVM_LOW)
   endtask
 
 endclass
