@@ -155,14 +155,14 @@ end
     //     //
     // Reference code;
     //    How to wait for signal value
-    //      while (control_signal === 1'b1) @(posedge clock_i);
+        while (reset_i) @(posedge clock_i);
     //    
     //    How to assign a struct member, named xyz, from a signal.   
     //    All available input signals listed.
-    //      memaccess_out_monitor_struct.xyz = DMem_addr_i;  //    [15:0] 
-    //      memaccess_out_monitor_struct.xyz = DMem_din_i;  //    [15:0] 
-    //      memaccess_out_monitor_struct.xyz = memout_i;  //    [15:0] 
-    //      memaccess_out_monitor_struct.xyz = DMem_rd_i;  //     
+        memaccess_out_monitor_struct.DMem_addr = DMem_addr_i;  //    [15:0] 
+        memaccess_out_monitor_struct.DMem_din = DMem_din_i;  //    [15:0] 
+        memaccess_out_monitor_struct.memout = memout_i;  //    [15:0] 
+        memaccess_out_monitor_struct.DMem_rd = DMem_rd_i;  //     
     // pragma uvmf custom do_monitor begin
     // UVMF_CHANGE_ME : Implement protocol monitoring.  The commented reference code 
     // below are examples of how to capture signal values and assign them to 
@@ -171,10 +171,10 @@ end
     // task should return when a complete transfer has been observed.  Once this task is
     // exited with captured values, it is then called again to wait for and observe 
     // the next transfer. One clock cycle is consumed between calls to do_monitor.
-    @(posedge clock_i);
-    @(posedge clock_i);
-    @(posedge clock_i);
-    @(posedge clock_i);
+    // @(posedge clock_i);
+    // @(posedge clock_i);
+    // @(posedge clock_i);
+    // @(posedge clock_i);
     // pragma uvmf custom do_monitor end
   endtask         
   

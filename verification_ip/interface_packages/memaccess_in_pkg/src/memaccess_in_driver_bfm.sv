@@ -91,7 +91,7 @@ end
 
   // INITIATOR mode input signals
   tri [15:0] DMem_out_i;
-  reg [15:0] DMem_out_o = 'b0;
+  reg [15:0] DMem_out_o = 'bz;
 
   // INITIATOR mode output signals
   tri  MControl_i;
@@ -112,7 +112,7 @@ end
   // These are signals marked as 'input' by the config file, but the signals will be
   // driven by this BFM if put into RESPONDER mode (flipping all signal directions around)
   assign DMem_out_i = bus.DMem_out;
-  assign bus.DMem_out = (initiator_responder == RESPONDER) ? DMem_out_o : 'bz;
+  assign bus.DMem_out = (initiator_responder == INITIATOR) ? DMem_out_o : 'bz;
 
 
   // These are signals marked as 'output' by the config file, but the outputs will
@@ -226,10 +226,10 @@ end
        //    All available initiator output and inout signals listed.
        //    Notice the _o.  Those are storage variables that allow for procedural assignment.
        //    Initiator output signals
-       //      MControl_o <= memaccess_in_initiator_struct.xyz;  //     
-       //      MAddr_o <= memaccess_in_initiator_struct.xyz;  //    [15:0] 
-       //      MData_o <= memaccess_in_initiator_struct.xyz;  //    [15:0] 
-       //      mem_state_o <= memaccess_in_initiator_struct.xyz;  //    [1:0] 
+            // MControl_o <= memaccess_in_initiator_struct.MControl;  //     
+            // MAddr_o <= memaccess_in_initiator_struct.MAddr;  //    [15:0] 
+            // MData_o <= memaccess_in_initiator_struct.MData;  //    [15:0] 
+            // mem_state_o <= memaccess_in_initiator_struct.mem_state;  //    [1:0] 
        //    Initiator inout signals
     // Initiate a transfer using the data received.
     @(posedge clock_i);
