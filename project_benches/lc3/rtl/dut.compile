@@ -4,7 +4,14 @@ src:
 # pragma uvmf custom src_additional end
 # pragma uvmf custom dut_compile_info begin
   - ./vhdl/vhdl_dut.vhd
-  - ./verilog/verilog_dut.v
+  - ./verilog/data_defs.v
+  - ./verilog/Fetch.v
+  - ./verilog/Decode_Pipelined.v
+  - ./verilog/Execute.v
+  - ./verilog/WriteBack.v
+  - ./verilog/Mem_Access.v
+  - ./verilog/Controller_Pipeline.v
+  - ./verilog/TopLevelLC3.v
 # pragma uvmf custom dut_compile_info end
 
 # pragma uvmf custom compile_additional begin
