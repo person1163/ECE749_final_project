@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------
-// Created with uvmf_gen version 2023.4
+// Created with uvmf_gen version 2023.4_2
 //----------------------------------------------------------------------
 // pragma uvmf custom header begin
 // pragma uvmf custom header end
@@ -37,20 +37,6 @@ class imem_random_sequence
   
       // Construct the transaction
       req=imem_transaction::type_id::create("req");
-      //initialise all registers
-      for (int i = 0; i < 8; i++) 
-      begin
-        start_item(req);
-        if (!req.randomize()) 
-          `uvm_fatal("SEQ", "imem_random_sequence::body()-imem_transaction randomization failed");
-        
-        req.Instr_dout[15:12] = LDR;
-        req.dr = i;
-        req.Instr_dout = {req.Instr_dout[15:12], req.dr, req.pcoffset9};
-        req.complete_instr = 1;
-        finish_item(req);
-      end
-      
       start_item(req);
       // Randomize the transaction
       if(!req.randomize()) `uvm_fatal("SEQ", "imem_random_sequence::body()-imem_transaction randomization failed")

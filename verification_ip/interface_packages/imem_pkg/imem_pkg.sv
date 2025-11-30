@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------
-// Created with uvmf_gen version 2023.4
+// Created with uvmf_gen version 2023.4_2
 //----------------------------------------------------------------------
 // pragma uvmf custom header begin
 // pragma uvmf custom header end
@@ -56,13 +56,9 @@ package imem_pkg;
 
    `include "src/imem_transaction_coverage.svh"
    `include "src/imem_sequence_base.svh"
-   // `include "src/imem_random_sequence.svh"
-
-   `include "src/imem_responder_sequence.svh"
-
-
    `include "src/imem_random_sequence.svh"
 
+   `include "src/imem_responder_sequence.svh"
    `include "src/imem2reg_adapter.svh"
 
    `include "src/imem_agent.svh"

@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------
-// Created with uvmf_gen version 2023.4
+// Created with uvmf_gen version 2023.4_2
 //----------------------------------------------------------------------
 // pragma uvmf custom header begin
 // pragma uvmf custom header end
@@ -22,49 +22,25 @@ class imem_responder_sequence
   // pragma uvmf custom class_item_additional begin
   // pragma uvmf custom class_item_additional end
 
-  bit flag;
   function new(string name = "imem_responder_sequence");
     super.new(name);
-    flag =0;
   endfunction
 
-task body();
-    bit responder_count = 0;
-    bit max_responder_transactions = 400;  // Configurable limit
-    
-    //initialize all registers
-    for (int i = 0; i < 8; i++) 
-    begin
+  task body();
+    req=imem_transaction::type_id::create("req");
+    forever begin
       start_item(req);
-      if (!req.randomize()) 
-        `uvm_fatal("SEQ", "imem_random_sequence::body()-imem_transaction randomization failed");
-      
-      req.Instr_dout[15:12] = LEA;
-      req.dr = i;
-      req.Instr_dout = {req.Instr_dout[15:12], req.dr, req.pcoffset9};
-      req.complete_instr = 1;
+      if(!req.randomize()) `uvm_fatal("SEQ", "imem_random_sequence::body()-imem_transaction randomization failed")
       finish_item(req);
+      // pragma uvmf custom body begin
+      // UVMF_CHANGE_ME : Do something here with the resulting req item.  The
+      // finish_item() call above will block until the req transaction is ready
+      // to be handled by the responder sequence.
+      // If this was an item that required a response, the expectation is
+      // that the response should be populated within this transaction now.
+      `uvm_info("SEQ",$sformatf("Processed txn: %s",req.convert2string()),UVM_HIGH)
+      // pragma uvmf custom body end
     end
-    
-    // CHANGE: Use repeat instead of forever
-    repeat(max_responder_transactions) begin
-      start_item(req);
-      if(flag == 1'b0) 
-        begin
-          if((!req.randomize() with {req.Instr_dout[15:12] inside {ADD, AND, NOT, BR, JMP, LD, LDI, LDR, LEA, ST, STI, STR};}))`uvm_fatal("SEQ", "imem_random_sequence::body()-imem_transaction randomization failed")
-          req.complete_instr=1;
-        end 
-      else 
-        begin
-          req.complete_instr = 0;
-          req.Instr_dout = 0;
-        end
-      finish_item(req);
-      `uvm_info("SEQ",$sformatf("Processed txn: %s",req.convert2string()),UVM_MEDIUM)
-      responder_count++;
-    end
-    
-    `uvm_info("SEQ", $sformatf("Responder sequence completed after %0d transactions", responder_count), UVM_LOW)
   endtask
 
 endclass

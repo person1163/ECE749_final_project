@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------
-// Created with uvmf_gen version 2023.4
+// Created with uvmf_gen version 2023.4_2
 //----------------------------------------------------------------------
 // pragma uvmf custom header begin
 // pragma uvmf custom header end
@@ -49,20 +49,22 @@ typedef struct packed  { \
 //      and from_monitor_struct methods of the imem_transaction class.
 //
   `define imem_MONITOR_STRUCT typedef struct packed  { \
-  bit complete_instr ; \
-  bit_16 Instr_dout ; \
-  bit_16 PC ; \
+  bit [15:0] PC ; \
   bit instrmem_rd ; \
+  bit [15:0] Instr_dout ; \
+  bit complete_instr ; \
+  op_type op ; \
      } imem_monitor_s;
 
   `define imem_TO_MONITOR_STRUCT_FUNCTION \
   virtual function imem_monitor_s to_monitor_struct();\
     imem_monitor_struct = \
             { \
-            this.complete_instr , \
-            this.Instr_dout , \
             this.PC , \
-            this.instrmem_rd  \
+            this.instrmem_rd , \
+            this.Instr_dout , \
+            this.complete_instr , \
+            this.op  \
             };\
     return ( imem_monitor_struct);\
   endfunction\
@@ -70,10 +72,11 @@ typedef struct packed  { \
   `define imem_FROM_MONITOR_STRUCT_FUNCTION \
   virtual function void from_monitor_struct(imem_monitor_s imem_monitor_struct);\
             {\
-            this.complete_instr , \
-            this.Instr_dout , \
             this.PC , \
-            this.instrmem_rd  \
+            this.instrmem_rd , \
+            this.Instr_dout , \
+            this.complete_instr , \
+            this.op  \
             } = imem_monitor_struct;\
   endfunction
 
@@ -83,20 +86,22 @@ typedef struct packed  { \
 //      Also update the comments in the driver BFM.
 //
   `define imem_INITIATOR_STRUCT typedef struct packed  { \
-  bit complete_instr ; \
-  bit_16 Instr_dout ; \
-  bit_16 PC ; \
+  bit [15:0] PC ; \
   bit instrmem_rd ; \
+  bit [15:0] Instr_dout ; \
+  bit complete_instr ; \
+  op_type op ; \
      } imem_initiator_s;
 
   `define imem_TO_INITIATOR_STRUCT_FUNCTION \
   virtual function imem_initiator_s to_initiator_struct();\
     imem_initiator_struct = \
            {\
-           this.complete_instr , \
-           this.Instr_dout , \
            this.PC , \
-           this.instrmem_rd  \
+           this.instrmem_rd , \
+           this.Instr_dout , \
+           this.complete_instr , \
+           this.op  \
            };\
     return ( imem_initiator_struct);\
   endfunction
@@ -104,10 +109,11 @@ typedef struct packed  { \
   `define imem_FROM_INITIATOR_STRUCT_FUNCTION \
   virtual function void from_initiator_struct(imem_initiator_s imem_initiator_struct);\
            {\
-           this.complete_instr , \
-           this.Instr_dout , \
            this.PC , \
-           this.instrmem_rd  \
+           this.instrmem_rd , \
+           this.Instr_dout , \
+           this.complete_instr , \
+           this.op  \
            } = imem_initiator_struct;\
   endfunction
 
@@ -117,20 +123,22 @@ typedef struct packed  { \
 //      Also update the comments in the driver BFM.
 //
   `define imem_RESPONDER_STRUCT typedef struct packed  { \
-  bit complete_instr ; \
-  bit_16 Instr_dout ; \
-  bit_16 PC ; \
+  bit [15:0] PC ; \
   bit instrmem_rd ; \
+  bit [15:0] Instr_dout ; \
+  bit complete_instr ; \
+  op_type op ; \
      } imem_responder_s;
 
   `define imem_TO_RESPONDER_STRUCT_FUNCTION \
   virtual function imem_responder_s to_responder_struct();\
     imem_responder_struct = \
            {\
-           this.complete_instr , \
-           this.Instr_dout , \
            this.PC , \
-           this.instrmem_rd  \
+           this.instrmem_rd , \
+           this.Instr_dout , \
+           this.complete_instr , \
+           this.op  \
            };\
     return ( imem_responder_struct);\
   endfunction
@@ -138,10 +146,11 @@ typedef struct packed  { \
   `define imem_FROM_RESPONDER_STRUCT_FUNCTION \
   virtual function void from_responder_struct(imem_responder_s imem_responder_struct);\
            {\
-           this.complete_instr , \
-           this.Instr_dout , \
            this.PC , \
-           this.instrmem_rd  \
+           this.instrmem_rd , \
+           this.Instr_dout , \
+           this.complete_instr , \
+           this.op  \
            } = imem_responder_struct;\
   endfunction
 // pragma uvmf custom additional begin

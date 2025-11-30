@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------
-// Created with uvmf_gen version 2023.4
+// Created with uvmf_gen version 2023.4_2
 //----------------------------------------------------------------------
 // pragma uvmf custom header begin
 // pragma uvmf custom header end
@@ -90,16 +90,16 @@ end
   // directionality in the config file was from the point-of-view of the INITIATOR
 
   // INITIATOR mode input signals
-  tri  complete_instr_i;
-  reg  complete_instr_o = 'bz;
   tri [15:0] Instr_dout_i;
-  reg [15:0] Instr_dout_o = 'bz;
+  reg [15:0] Instr_dout_o = 16'b0;
+  tri  complete_instr_i;
+  reg  complete_instr_o = 1'b0;
 
   // INITIATOR mode output signals
   tri [15:0] PC_i;
-  reg [15:0] PC_o = 'bz;
+  reg [15:0] PC_o = 16'b0;
   tri  instrmem_rd_i;
-  reg  instrmem_rd_o = 'bz;
+  reg  instrmem_rd_o = 1'b0;
 
   // Bi-directional signals
   
@@ -109,10 +109,10 @@ end
 
   // These are signals marked as 'input' by the config file, but the signals will be
   // driven by this BFM if put into RESPONDER mode (flipping all signal directions around)
-  assign complete_instr_i = bus.complete_instr;
-  assign bus.complete_instr = (initiator_responder == RESPONDER) ? complete_instr_o : 'bz;
   assign Instr_dout_i = bus.Instr_dout;
   assign bus.Instr_dout = (initiator_responder == RESPONDER) ? Instr_dout_o : 'bz;
+  assign complete_instr_i = bus.complete_instr;
+  assign bus.complete_instr = (initiator_responder == RESPONDER) ? complete_instr_o : 'bz;
 
 
   // These are signals marked as 'output' by the config file, but the outputs will
@@ -151,17 +151,27 @@ end
   always @( posedge reset_i )
      begin
        // RESPONDER mode output signals
-       complete_instr_o <= 'bz;
-       Instr_dout_o <= 'bz;
+       Instr_dout_o <= 16'b0;
+       complete_instr_o <= 1'b0;
        // INITIATOR mode output signals
-       PC_o <= 'bz;
-       instrmem_rd_o <= 'bz;
+       PC_o <= 16'b0;
+       instrmem_rd_o <= 1'b0;
        // Bi-directional signals
  
      end    
 // pragma uvmf custom reset_condition_and_response end
 
   // pragma uvmf custom interface_item_additional begin
+    always @(posedge clock_i) 
+     begin
+      wait(reset_i == 0);
+      if(instrmem_rd_i == 1)begin
+        complete_instr_o <= 1;
+      end
+      else begin
+        complete_instr_o <= 0;
+      end
+     end 
   // pragma uvmf custom interface_item_additional end
 
   //******************************************************************
@@ -195,15 +205,17 @@ end
        );// pragma tbx xtf  
        // 
        // Members within the imem_initiator_struct:
-       //   bit complete_instr ;
-       //   bit_16 Instr_dout ;
-       //   bit_16 PC ;
+       //   bit [15:0] PC ;
        //   bit instrmem_rd ;
+       //   bit [15:0] Instr_dout ;
+       //   bit complete_instr ;
+       //   op_type op ;
        // Members within the imem_responder_struct:
-       //   bit complete_instr ;
-       //   bit_16 Instr_dout ;
-       //   bit_16 PC ;
+       //   bit [15:0] PC ;
        //   bit instrmem_rd ;
+       //   bit [15:0] Instr_dout ;
+       //   bit complete_instr ;
+       //   op_type op ;
        initiator_struct = imem_initiator_struct;
        //
        // Reference code;
@@ -213,8 +225,8 @@ end
        //    How to assign a responder struct member, named xyz, from a signal.   
        //    All available initiator input and inout signals listed.
        //    Initiator input signals
-       //      imem_responder_struct.xyz = complete_instr_i;  //     
        //      imem_responder_struct.xyz = Instr_dout_i;  //    [15:0] 
+       //      imem_responder_struct.xyz = complete_instr_i;  //     
        //    Initiator inout signals
        //    How to assign a signal from an initiator struct member named xyz.   
        //    All available initiator output and inout signals listed.
@@ -224,8 +236,12 @@ end
        //      instrmem_rd_o <= imem_initiator_struct.xyz;  //     
        //    Initiator inout signals
     // Initiate a transfer using the data received.
+    @(posedge clock_i);
+    @(posedge clock_i);
     // Wait for the responder to complete the transfer then place the responder data into 
     // imem_responder_struct.
+    @(posedge clock_i);
+    @(posedge clock_i);
     responder_struct = imem_responder_struct;
   endtask        
 // pragma uvmf custom initiate_and_get_response end
@@ -249,15 +265,17 @@ bit first_transfer=1;
        input imem_responder_s imem_responder_struct 
        );// pragma tbx xtf   
   // Variables within the imem_initiator_struct:
-  //   bit complete_instr ;
-  //   bit_16 Instr_dout ;
-  //   bit_16 PC ;
+  //   bit [15:0] PC ;
   //   bit instrmem_rd ;
+  //   bit [15:0] Instr_dout ;
+  //   bit complete_instr ;
+  //   op_type op ;
   // Variables within the imem_responder_struct:
-  //   bit complete_instr ;
-  //   bit_16 Instr_dout ;
-  //   bit_16 PC ;
+  //   bit [15:0] PC ;
   //   bit instrmem_rd ;
+  //   bit [15:0] Instr_dout ;
+  //   bit complete_instr ;
+  //   op_type op ;
        // Reference code;
        //    How to wait for signal value
        //      while (control_signal == 1'b1) @(posedge clock_i);
@@ -272,24 +290,17 @@ bit first_transfer=1;
        //    All available responder output and inout signals listed.
        //    Notice the _o.  Those are storage variables that allow for procedural assignment.
        //    Responder output signals
-       //      complete_instr_o <= imem_responder_struct.xyz;  //     
        //      Instr_dout_o <= imem_responder_struct.xyz;  //    [15:0] 
+       //      complete_instr_o <= imem_responder_struct.xyz;  //     
        //    Responder inout signals
-       @(posedge clock_i)
-       while(instrmem_rd_i != 1'b1)@(posedge clock_i);
-
-       if(imem_responder_struct.complete_instr ===1) begin
-        Instr_dout_o <= imem_responder_struct.Instr_dout;
-        complete_instr_o <= 1'b1;
-              end else begin
-              Instr_dout_o <= 0;
-              complete_instr_o <= 1'b0; 
-              end 
-    // Perform transfer response here.   
-    // Reply using data recieved in the imem_responder_struct.
     
-    // Reply using data recieved in the transaction handle.
-    
+    wait(reset_i == 0);
+  do 
+    begin 
+    @(posedge clock_i);
+  end
+  while (instrmem_rd_i != 1'b1) ;
+  Instr_dout_o<=imem_responder_struct.Instr_dout ;
     // Wait for next transfer then gather info from intiator about the transfer.
     // Place the data into the imem_initiator_struct.
   endtask

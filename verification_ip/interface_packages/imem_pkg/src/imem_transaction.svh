@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------
-// Created with uvmf_gen version 2023.4
+// Created with uvmf_gen version 2023.4_2
 //----------------------------------------------------------------------
 // pragma uvmf custom header begin
 // pragma uvmf custom header end
@@ -18,22 +18,33 @@ class imem_transaction  extends uvmf_transaction_base;
 
   `uvm_object_utils( imem_transaction )
 
-  bit complete_instr ;
-  rand bit_16 Instr_dout ;
-  rand bit [2:0] sr1 ;
-  rand bit [2:0] sr2 ;
-  rand bit [2:0] dr ;
-  rand bit [2:0] baser ;
-  rand bit [8:0] pcoffset9 ;
-  rand bit [5:0] pcoffset6 ;
-  rand bit [4:0] imm5 ;
-  rand bit [2:0] nzp ;
-  bit_16 PC ;
+  bit [15:0] PC ;
   bit instrmem_rd ;
+  rand bit [15:0] Instr_dout ;
+  rand bit complete_instr ;
+  rand op_type op ;
 
+constraint c_opcode_match { Instr_dout[15:12] == op; }
+
+    constraint add_op { 
+        if(Instr_dout[15:12]==4'b0001 && Instr_dout[5]==0)
+        {
+                    Instr_dout[4:3]==2'b00;
+        }
+    }
+    constraint and_op{
+         if(Instr_dout[15:12]==4'b0101 && Instr_dout[5]==0)
+        {
+                    Instr_dout[4:3]==2'b00;
+        }
+    }
+        constraint not_op{
+         if(Instr_dout[15:12]==4'b1001&& Instr_dout[5]==0)
+        {
+                    Instr_dout[5:0]==6'b111111;
+        }
+    }
   //Constraints for the transaction variables:
- constraint op_code { Instr_dout[15:12] inside {0,1,2,3,5,6,7,9,10,11,12,14} ; }
- constraint nzp_constr {$countones(nzp) != 0;}
 
   // pragma uvmf custom class_item_additional begin
   // pragma uvmf custom class_item_additional end
@@ -114,7 +125,7 @@ class imem_transaction  extends uvmf_transaction_base;
   virtual function string convert2string();
     // pragma uvmf custom convert2string begin
     // UVMF_CHANGE_ME : Customize format if desired.
-    return $sformatf("sr1:0x%x sr2:0x%x dr:0x%x baser:0x%x pcoffset9:0x%x pcoffset6:0x%x imm5:0x%x nzp:0x%x PC:0x%x instrmem_rd:0x%x instr_dout:0x%x complete_instr:0x%x ",sr1,sr2,dr,baser,pcoffset9,pcoffset6,imm5,nzp,PC,instrmem_rd,Instr_dout,complete_instr);
+    return $sformatf("PC:0x%x instrmem_rd:0x%x Instr_dout:0x%x complete_instr:0x%x op:0x%x ",PC,instrmem_rd,Instr_dout,complete_instr,op);
     // pragma uvmf custom convert2string end
   endfunction
 
@@ -153,21 +164,16 @@ class imem_transaction  extends uvmf_transaction_base;
   //
   virtual function void do_copy (uvm_object rhs);
     imem_transaction  RHS;
-    assert($cast(RHS,rhs));
+    if(!$cast(RHS,rhs))begin
+      `uvm_fatal("CAST","Transaction cast in do_copy() failed!")
+    end
     // pragma uvmf custom do_copy begin
     super.do_copy(rhs);
-    this.complete_instr = RHS.complete_instr;
-    this.sr1 = RHS.sr1;
-    this.sr2 = RHS.sr2;
-    this.dr = RHS.dr;
-    this.baser = RHS.baser;
-    this.pcoffset9 = RHS.pcoffset9;
-    this.pcoffset6 = RHS.pcoffset6;
-    this.imm5 = RHS.imm5;
-    this.nzp = RHS.nzp;
-    this.Instr_dout = RHS.Instr_dout;
     this.PC = RHS.PC;
     this.instrmem_rd = RHS.instrmem_rd;
+    this.Instr_dout = RHS.Instr_dout;
+    this.complete_instr = RHS.complete_instr;
+    this.op = RHS.op;
     // pragma uvmf custom do_copy end
   endfunction
 
@@ -191,94 +197,15 @@ class imem_transaction  extends uvmf_transaction_base;
     //   default : $add_color(transaction_view_h,"grey");
     // endcase
     // UVMF_CHANGE_ME : Eliminate transaction variables not wanted in transaction viewing in the waveform viewer
-    $add_attribute(transaction_view_h,complete_instr,"complete_instr");
-    $add_attribute(transaction_view_h,Instr_dout,"Instr_dout");
     $add_attribute(transaction_view_h,PC,"PC");
-    $add_attribute(transaction_view_h,sr1,"sr1");
-    $add_attribute(transaction_view_h,sr2,"sr2");
-    $add_attribute(transaction_view_h,dr,"dr");
-    $add_attribute(transaction_view_h,baser,"baser");
-    $add_attribute(transaction_view_h,pcoffset9,"pcoffset9");
-    $add_attribute(transaction_view_h,pcoffset6,"pcoffset6");
-    $add_attribute(transaction_view_h,imm5,"imm5");
-    $add_attribute(transaction_view_h,nzp,"nzp");
     $add_attribute(transaction_view_h,instrmem_rd,"instrmem_rd");
+    $add_attribute(transaction_view_h,Instr_dout,"Instr_dout");
+    $add_attribute(transaction_view_h,complete_instr,"complete_instr");
+    $add_attribute(transaction_view_h,op,"op");
     // pragma uvmf custom add_to_wave end
     $end_transaction(transaction_view_h,end_time);
     $free_transaction(transaction_view_h);
     `endif // QUESTA
-  endfunction
-
-function void post_randomize();
-		if ((Instr_dout[15:12]==ADD) && (Instr_dout[5]==0)) ///ADD
-		begin
-		Instr_dout[15:0] = {4'b0001,Instr_dout[11:9],Instr_dout[8:6],3'b000,Instr_dout[2:0]};
-		end
-		else if ((Instr_dout[15:12]==ADD) && (Instr_dout[5]==1))
-		begin
-		Instr_dout[15:0] = {4'b0001,Instr_dout[11:6],1'b1,Instr_dout[4:0]};
-		end
-		
-		if ((Instr_dout[15:12]==AND) && (Instr_dout[5]==0)) ///AND
-		begin
-		Instr_dout[15:0] = {4'b0101,Instr_dout[11:9],Instr_dout[8:6],3'b000,Instr_dout[2:0]};
-		end
-		else if ((Instr_dout[15:12]==ADD) && (Instr_dout[5]==1))
-		begin
-		Instr_dout[15:0] = {4'b0101,Instr_dout[11:6],1'b1,Instr_dout[4:0]};
-		end
-
-		if (Instr_dout[15:12]==NOT) ///NOT
-		begin
-		Instr_dout[15:0] = {4'b1001,Instr_dout[11:6],6'b111111};
-		end
-		
-		else if (Instr_dout[15:12]==BR) ///BR
-		begin
-		Instr_dout[15:0] = {4'b0000,Instr_dout[11:0]};
-		end
-		
-		else if (Instr_dout[15:12]==JMP) ////JMP
-		begin
-		Instr_dout[15:0] = {4'b1100,3'b111,Instr_dout[8:6],6'b000000};
-		end
-		
-		else if (Instr_dout[15:12]==ST)  //////ST
-		begin
-		Instr_dout[15:0] = {4'b0011, Instr_dout[11:0]};
-		end
-		
-		else if (Instr_dout[15:12]==STI) //////STI
-		begin
-		Instr_dout[15:0] = {4'b1011, Instr_dout[11:0]};
-		end
-		
-		else if (Instr_dout[15:12]==LD)  ///////LD
-		begin
-		Instr_dout[15:0] = {4'b0010, Instr_dout[11:0]};
-		end
-		
-		else if (Instr_dout[15:12]==STR) ///////STR
-		begin
-		Instr_dout[15:0] = {4'b0111, Instr_dout[11:0]};
-		end
-		
-		else if (Instr_dout[15:12]==LDR) /////LDR
-		begin
-		Instr_dout[15:0] = {4'b0110, Instr_dout[11:0]};
-		end
-		
-		else if (Instr_dout[15:12]==LDI) ///LDI
-		begin
-		Instr_dout[15:0] = {4'b1010, Instr_dout[11:0]};
-		end
-		
-		else if (Instr_dout[15:12]==LEA)   ///LEA
-		begin
-		Instr_dout[15:0] = {4'b1110, Instr_dout[11:0]};
-		end
-
-		
   endfunction
 
 endclass

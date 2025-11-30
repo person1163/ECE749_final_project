@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------
-// Created with uvmf_gen version 2023.4
+// Created with uvmf_gen version 2023.4_2
 //----------------------------------------------------------------------
 // pragma uvmf custom header begin
 // pragma uvmf custom header end
@@ -69,16 +69,16 @@ end
 
   tri clock_i;
   tri reset_i;
-  tri  complete_instr_i;
-  tri [15:0] Instr_dout_i;
   tri [15:0] PC_i;
   tri  instrmem_rd_i;
+  tri [15:0] Instr_dout_i;
+  tri  complete_instr_i;
   assign clock_i = bus.clock;
   assign reset_i = bus.reset;
-  assign complete_instr_i = bus.complete_instr;
-  assign Instr_dout_i = bus.Instr_dout;
   assign PC_i = bus.PC;
   assign instrmem_rd_i = bus.instrmem_rd;
+  assign Instr_dout_i = bus.Instr_dout;
+  assign complete_instr_i = bus.complete_instr;
 
   // Proxy handle to UVM monitor
   imem_pkg::imem_monitor  proxy;
@@ -148,10 +148,11 @@ end
   task do_monitor(output imem_monitor_s imem_monitor_struct);
     //
     // Available struct members:
-    //     //    imem_monitor_struct.complete_instr
-    //     //    imem_monitor_struct.Instr_dout
     //     //    imem_monitor_struct.PC
     //     //    imem_monitor_struct.instrmem_rd
+    //     //    imem_monitor_struct.Instr_dout
+    //     //    imem_monitor_struct.complete_instr
+    //     //    imem_monitor_struct.op
     //     //
     // Reference code;
     //    How to wait for signal value
@@ -159,10 +160,10 @@ end
     //    
     //    How to assign a struct member, named xyz, from a signal.   
     //    All available input signals listed.
-    //      imem_monitor_struct.xyz = complete_instr_i;  //     
-    //      imem_monitor_struct.xyz = Instr_dout_i;  //    [15:0] 
-    //      imem_monitor_struct.xyz = PC_i;  //    [15:0] 
-    //      imem_monitor_struct.xyz = instrmem_rd_i;  //     
+         imem_monitor_struct.PC = PC_i;  //    [15:0] 
+         imem_monitor_struct.instrmem_rd = instrmem_rd_i;  //     
+         imem_monitor_struct.Instr_dout = Instr_dout_i;  //    [15:0] 
+         imem_monitor_struct.complete_instr = complete_instr_i;  //     
     // pragma uvmf custom do_monitor begin
     // UVMF_CHANGE_ME : Implement protocol monitoring.  The commented reference code 
     // below are examples of how to capture signal values and assign them to 
@@ -171,10 +172,7 @@ end
     // task should return when a complete transfer has been observed.  Once this task is
     // exited with captured values, it is then called again to wait for and observe 
     // the next transfer. One clock cycle is consumed between calls to do_monitor.
-  imem_monitor_struct.complete_instr = complete_instr_i;  //     
-  imem_monitor_struct.Instr_dout = Instr_dout_i;  //    [15:0] 
-  imem_monitor_struct.PC = PC_i;  //    [15:0] 
-  imem_monitor_struct.instrmem_rd = instrmem_rd_i;  // 
+
     // pragma uvmf custom do_monitor end
   endtask         
   

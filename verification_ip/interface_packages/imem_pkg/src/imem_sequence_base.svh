@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------
-// Created with uvmf_gen version 2023.4
+// Created with uvmf_gen version 2023.4_2
 //----------------------------------------------------------------------
 // pragma uvmf custom header begin
 // pragma uvmf custom header end
@@ -42,11 +42,9 @@ class imem_sequence_base    extends uvmf_sequence_base #(
         // Block until new rsp available
         get_response(rsp);
         // New rsp received.  Indicate to sequence using event.
-        $display ("KKKDBG::: Response received from the DUT");
-        rsp.print();
         ->new_rsp;
         // Display the received response transaction
-        `uvm_info("SEQ", {"New response transaction:",rsp.convert2string()}, UVM_NONE)
+        `uvm_info("SEQ", {"New response transaction:",rsp.convert2string()}, UVM_MEDIUM)
       end
     join_none
   endtask
@@ -62,7 +60,7 @@ class imem_sequence_base    extends uvmf_sequence_base #(
   //
   virtual task pre_body();
     // pragma uvmf custom pre_body begin
-    get_responses(); // uncommneted by KKK as it is required
+//    get_responses();
     // pragma uvmf custom pre_body end
   endtask
 

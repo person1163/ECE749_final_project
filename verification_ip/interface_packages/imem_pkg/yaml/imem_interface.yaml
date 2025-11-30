@@ -8,27 +8,27 @@ uvmf:
       gen_inbound_streaming_driver: 'False'
       hdl_pkg_parameters: []
       hdl_typedefs:
-      - name: bit_16
-        type: bit [15:0]
+      - name: op_type
+        type: enum bit [3:0] {ADD,AND,NOT,LD,LDR,LDI,LEA,ST,STRR,STI,BR,JMP}
       hvl_pkg_parameters: []
       hvl_typedefs: []
       parameters: []
       ports:
-      - dir: input
-        name: complete_instr
-        reset_value: '''bz'
-        width: '1'
-      - dir: input
-        name: Instr_dout
-        reset_value: '''bz'
-        width: '16'
       - dir: output
         name: PC
-        reset_value: '''bz'
+        reset_value: 16'b0
         width: '16'
       - dir: output
         name: instrmem_rd
-        reset_value: '''bz'
+        reset_value: 1'b0
+        width: '1'
+      - dir: input
+        name: Instr_dout
+        reset_value: 16'b0
+        width: '16'
+      - dir: input
+        name: complete_instr
+        reset_value: 1'b0
         width: '1'
       reset: reset
       reset_assertion_level: 'True'
@@ -37,25 +37,31 @@ uvmf:
       - comment: ''
         iscompare: 'False'
         isrand: 'False'
-        name: complete_instr
-        type: bit
-        unpacked_dimension: ''
-      - comment: ''
-        iscompare: 'False'
-        isrand: 'True'
-        name: Instr_dout
-        type: bit_16
-        unpacked_dimension: ''
-      - comment: ''
-        iscompare: 'False'
-        isrand: 'False'
         name: PC
-        type: bit_16
+        type: bit [15:0]
         unpacked_dimension: ''
       - comment: ''
         iscompare: 'False'
         isrand: 'False'
         name: instrmem_rd
         type: bit
+        unpacked_dimension: ''
+      - comment: ''
+        iscompare: 'False'
+        isrand: 'True'
+        name: Instr_dout
+        type: bit [15:0]
+        unpacked_dimension: ''
+      - comment: ''
+        iscompare: 'False'
+        isrand: 'True'
+        name: complete_instr
+        type: bit
+        unpacked_dimension: ''
+      - comment: ''
+        iscompare: 'False'
+        isrand: 'True'
+        name: op
+        type: op_type
         unpacked_dimension: ''
       use_dpi_link: 'False'
