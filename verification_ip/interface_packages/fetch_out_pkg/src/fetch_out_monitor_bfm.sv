@@ -146,9 +146,9 @@ end
   task do_monitor(output fetch_out_monitor_s fetch_out_monitor_struct);
     //
     // Available struct members:
-    //     //    fetch_out_monitor_struct.instrmem_rd
-    //     //    fetch_out_monitor_struct.pc
-    //     //    fetch_out_monitor_struct.npc
+           fetch_out_monitor_struct.instrmem_rd = instrmem_rd_i;
+           fetch_out_monitor_struct.pc = pc_i;
+           fetch_out_monitor_struct.npc = npc_i;
     //     //
     // Reference code;
     //    How to wait for signal value
@@ -167,10 +167,10 @@ end
     // task should return when a complete transfer has been observed.  Once this task is
     // exited with captured values, it is then called again to wait for and observe 
     // the next transfer. One clock cycle is consumed between calls to do_monitor.
-    @(posedge clk_i);
-    @(posedge clk_i);
-    @(posedge clk_i);
-    @(posedge clk_i);
+    // @(posedge clk_i);
+    // @(posedge clk_i);
+    // @(posedge clk_i);
+    // @(posedge clk_i);
     // pragma uvmf custom do_monitor end
   endtask         
   

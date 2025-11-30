@@ -159,10 +159,10 @@ end
     //    
     //    How to assign a struct member, named xyz, from a signal.   
     //    All available input signals listed.
-    //      fetch_in_monitor_struct.xyz = br_taken_i;  //     
-    //      fetch_in_monitor_struct.xyz = taddr_i;  //    [15:0] 
-    //      fetch_in_monitor_struct.xyz = enable_updatePC_i;  //     
-    //      fetch_in_monitor_struct.xyz = enable_fetch_i;  //     
+         fetch_in_monitor_struct.br_taken = br_taken_i;  //     
+         fetch_in_monitor_struct.taddr = taddr_i;  //    [15:0] 
+         fetch_in_monitor_struct.enable_updatePC = enable_updatePC_i;  //     
+         fetch_in_monitor_struct.enable_fetch = enable_fetch_i;  //     
     // pragma uvmf custom do_monitor begin
     // UVMF_CHANGE_ME : Implement protocol monitoring.  The commented reference code 
     // below are examples of how to capture signal values and assign them to 
@@ -171,10 +171,10 @@ end
     // task should return when a complete transfer has been observed.  Once this task is
     // exited with captured values, it is then called again to wait for and observe 
     // the next transfer. One clock cycle is consumed between calls to do_monitor.
-    @(posedge clk_i);
-    @(posedge clk_i);
-    @(posedge clk_i);
-    @(posedge clk_i);
+    // @(posedge clk_i);
+    // @(posedge clk_i);
+    // @(posedge clk_i);
+    // @(posedge clk_i);
     // pragma uvmf custom do_monitor end
   endtask         
   
