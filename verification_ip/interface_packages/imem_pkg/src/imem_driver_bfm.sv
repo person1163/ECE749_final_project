@@ -162,16 +162,6 @@ end
 // pragma uvmf custom reset_condition_and_response end
 
   // pragma uvmf custom interface_item_additional begin
-    always @(posedge clock_i) 
-     begin
-      wait(reset_i == 0);
-      if(instrmem_rd_i == 1)begin
-        complete_instr_o <= 1;
-      end
-      else begin
-        complete_instr_o <= 0;
-      end
-     end 
   // pragma uvmf custom interface_item_additional end
 
   //******************************************************************
@@ -294,12 +284,9 @@ bit first_transfer=1;
        //      complete_instr_o <= imem_responder_struct.xyz;  //     
        //    Responder inout signals
     
-    wait(reset_i == 0);
-  do 
-    begin 
-    @(posedge clock_i);
-  end
-  while (instrmem_rd_i != 1'b1) ;
+@(posedge clock_i);
+  while (instrmem_rd_i == 1'b0) @(posedge clock_i);
+  complete_instr_o <=1'b1;
   Instr_dout_o<=imem_responder_struct.Instr_dout ;
     // Wait for next transfer then gather info from intiator about the transfer.
     // Place the data into the imem_initiator_struct.
