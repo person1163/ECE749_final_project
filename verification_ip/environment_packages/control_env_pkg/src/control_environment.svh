@@ -75,6 +75,7 @@ class control_environment  extends uvmf_environment_base #(
     vsqr = control_vsqr_t::type_id::create("vsqr", this);
     vsqr.set_config(configuration);
     configuration.set_vsqr(vsqr);
+    scoreboard.end_of_test_empty_check=0;
 
     // pragma uvmf custom build_phase begin
     // pragma uvmf custom build_phase end

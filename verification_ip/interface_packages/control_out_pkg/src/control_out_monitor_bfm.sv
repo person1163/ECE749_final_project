@@ -132,7 +132,7 @@ end
   // ****************************************************************************              
   initial begin                                                                             
     @go;
-    #50;                                                                                   
+    #70;                                                                                   
     forever begin                                                                        
       @(posedge clock_i);  
       do_monitor( control_out_monitor_struct );
