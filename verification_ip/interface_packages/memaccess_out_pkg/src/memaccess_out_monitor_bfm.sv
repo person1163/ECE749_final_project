@@ -117,7 +117,8 @@ end
   
   // ****************************************************************************              
   initial begin                                                                             
-    @go;                                                                                   
+    @go;  
+    #70;                                                                                 
     forever begin                                                                        
       @(posedge clock_i);  
       do_monitor( memaccess_out_monitor_struct );
@@ -155,7 +156,6 @@ end
     //     //
     // Reference code;
     //    How to wait for signal value
-        while (reset_i) @(posedge clock_i);
     //    
     //    How to assign a struct member, named xyz, from a signal.   
     //    All available input signals listed.

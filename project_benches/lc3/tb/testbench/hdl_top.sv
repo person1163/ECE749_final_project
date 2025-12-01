@@ -78,7 +78,7 @@ import uvmf_base_pkg_hdl::*;
   memaccess_in_if  memaccess_memaccess_in_agent_bus(
      // pragma uvmf custom memaccess_memaccess_in_agent_bus_connections begin
      .clock(clk), .reset(rst),
-    .MControl ( dut_verilog.M_Control),
+    .MControl ( dut_verilog.Mem_Control_out),
     .MAddr(dut_verilog.pcout),
     .MData(dut_verilog.M_Data),
     .DMem_out (dut_verilog.Data_dout),
