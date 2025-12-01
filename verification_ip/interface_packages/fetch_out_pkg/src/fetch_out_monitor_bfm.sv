@@ -115,9 +115,9 @@ end
   
   // ****************************************************************************              
   initial begin                                                                             
-    @go;                                                                                   
-    forever begin                                                                        
-      @(posedge clk_i);  
+    @go;     
+    #70;                                                                           
+    forever begin                                                                         
       do_monitor( fetch_out_monitor_struct );
                                                                  
  
@@ -147,6 +147,8 @@ end
     //
     // Available struct members:
            fetch_out_monitor_struct.instrmem_rd = instrmem_rd_i;
+           @(posedge clk_i); 
+           #1;
            fetch_out_monitor_struct.pc = pc_i;
            fetch_out_monitor_struct.npc = npc_i;
     //     //

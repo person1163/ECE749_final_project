@@ -117,9 +117,10 @@ end
   
   // ****************************************************************************              
   initial begin                                                                             
-    @go;                                                                                   
+    @go;   
+    #70;                                                                            
     forever begin                                                                        
-      @(posedge clk_i);  
+      @(posedge clk_i); 
       do_monitor( fetch_in_monitor_struct );
                                                                  
  

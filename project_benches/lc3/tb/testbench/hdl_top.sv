@@ -64,7 +64,7 @@ import uvmf_base_pkg_hdl::*;
        .br_taken(dut_verilog.br_taken),
       .enable_fetch (dut_verilog.enable_fetch),
       .enable_updatePC(dut_verilog.enable_updatePC),
-       .taddr(dut_verilog.taddr)
+       .taddr(dut_verilog.pcout)
      // pragma uvmf custom fetch_fetch_in_agent_bus_connections end
      );
   fetch_out_if  fetch_fetch_out_agent_bus(
