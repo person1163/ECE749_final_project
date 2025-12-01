@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------
-// Created with uvmf_gen version 2023.4
+// Created with uvmf_gen version 2023.4_2
 //----------------------------------------------------------------------
 // pragma uvmf custom header begin
 // pragma uvmf custom header end
@@ -30,7 +30,7 @@ class dmem_responder_sequence
     req=dmem_transaction::type_id::create("req");
     forever begin
       start_item(req);
-      if(!req.randomize()) `uvm_fatal("SEQ", "data_mem_random_sequence::body()-data_mem_transaction randomization failed")
+       if(!req.randomize()) `uvm_fatal("SEQ", "dmem_random_sequence::body()-dmem_transaction randomization failed")
       finish_item(req);
       // pragma uvmf custom body begin
       // UVMF_CHANGE_ME : Do something here with the resulting req item.  The

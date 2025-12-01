@@ -7,9 +7,7 @@ uvmf:
       existing_library_component: 'True'
       gen_inbound_streaming_driver: 'False'
       hdl_pkg_parameters: []
-      hdl_typedefs:
-      - name: bit_16
-        type: bit [15:0]
+      hdl_typedefs: []
       hvl_pkg_parameters: []
       hvl_typedefs: []
       parameters: []
@@ -46,15 +44,15 @@ uvmf:
         unpacked_dimension: ''
       - comment: ''
         iscompare: 'False'
-        isrand: 'True'
+        isrand: 'False'
         name: Data_dout
-        type: bit_16
+        type: bit [15:0]
         unpacked_dimension: ''
       - comment: ''
         iscompare: 'False'
         isrand: 'False'
         name: Data_din
-        type: bit_16
+        type: bit [15:0]
         unpacked_dimension: ''
       - comment: ''
         iscompare: 'False'
@@ -66,6 +64,6 @@ uvmf:
         iscompare: 'False'
         isrand: 'False'
         name: Data_addr
-        type: bit_16
+        type: bit [15:0]
         unpacked_dimension: ''
       use_dpi_link: 'False'

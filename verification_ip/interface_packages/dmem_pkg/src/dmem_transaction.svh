@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------
-// Created with uvmf_gen version 2023.4
+// Created with uvmf_gen version 2023.4_2
 //----------------------------------------------------------------------
 // pragma uvmf custom header begin
 // pragma uvmf custom header end
@@ -19,10 +19,10 @@ class dmem_transaction  extends uvmf_transaction_base;
   `uvm_object_utils( dmem_transaction )
 
   bit complete_data ;
-  rand bit_16 Data_dout ;
-  bit_16 Data_din ;
+  bit [15:0] Data_dout ;
+  bit [15:0] Data_din ;
   bit Data_rd ;
-  bit_16 Data_addr ;
+  bit [15:0] Data_addr ;
 
   //Constraints for the transaction variables:
 

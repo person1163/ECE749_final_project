@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------
-// Created with uvmf_gen version 2023.4
+// Created with uvmf_gen version 2023.4_2
 //----------------------------------------------------------------------
 // pragma uvmf custom header begin
 // pragma uvmf custom header end
@@ -50,10 +50,10 @@ typedef struct packed  { \
 //
   `define dmem_MONITOR_STRUCT typedef struct packed  { \
   bit _complete_data ; \
-  bit_16 _Data_dout ; \
-  bit_16 _Data_din ; \
+  bit [15:0] _Data_dout ; \
+  bit [15:0] _Data_din ; \
   bit _Data_rd ; \
-  bit_16 _Data_addr ; \
+  bit [15:0] _Data_addr ; \
      } dmem_monitor_s;
 
   `define dmem_TO_MONITOR_STRUCT_FUNCTION \
@@ -87,10 +87,10 @@ typedef struct packed  { \
 //
   `define dmem_INITIATOR_STRUCT typedef struct packed  { \
   bit _complete_data ; \
-  bit_16 _Data_dout ; \
-  bit_16 _Data_din ; \
+  bit [15:0] _Data_dout ; \
+  bit [15:0] _Data_din ; \
   bit _Data_rd ; \
-  bit_16 _Data_addr ; \
+  bit [15:0] _Data_addr ; \
      } dmem_initiator_s;
 
   `define dmem_TO_INITIATOR_STRUCT_FUNCTION \
@@ -124,10 +124,10 @@ typedef struct packed  { \
 //
   `define dmem_RESPONDER_STRUCT typedef struct packed  { \
   bit _complete_data ; \
-  bit_16 _Data_dout ; \
-  bit_16 _Data_din ; \
+  bit [15:0] _Data_dout ; \
+  bit [15:0] _Data_din ; \
   bit _Data_rd ; \
-  bit_16 _Data_addr ; \
+  bit [15:0] _Data_addr ; \
      } dmem_responder_s;
 
   `define dmem_TO_RESPONDER_STRUCT_FUNCTION \

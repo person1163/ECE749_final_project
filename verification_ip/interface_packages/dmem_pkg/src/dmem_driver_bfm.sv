@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------
-// Created with uvmf_gen version 2023.4
+// Created with uvmf_gen version 2023.4_2
 //----------------------------------------------------------------------
 // pragma uvmf custom header begin
 // pragma uvmf custom header end
@@ -91,17 +91,17 @@ end
 
   // INITIATOR mode input signals
   tri  complete_data_i;
-  reg  complete_data_o = 'bz;
+  reg  complete_data_o = 'b0;
   tri [15:0] Data_dout_i;
-  reg [15:0] Data_dout_o = 'bz;
+  reg [15:0] Data_dout_o = 'b0;
 
   // INITIATOR mode output signals
   tri [15:0] Data_din_i;
-  reg [15:0] Data_din_o = 'bz;
+  reg [15:0] Data_din_o = 'b0;
   tri  Data_rd_i;
-  reg  Data_rd_o = 'bz;
+  reg  Data_rd_o = 'b0;
   tri [15:0] Data_addr_i;
-  reg [15:0] Data_addr_o = 'bz;
+  reg [15:0] Data_addr_o = 'b0;
 
   // Bi-directional signals
   
@@ -155,12 +155,12 @@ end
   always @( posedge reset_i )
      begin
        // RESPONDER mode output signals
-       complete_data_o <= 'bz;
-       Data_dout_o <= 'bz;
+       complete_data_o <= 'b0;
+       Data_dout_o <= 'b0;
        // INITIATOR mode output signals
-       Data_din_o <= 'bz;
-       Data_rd_o <= 'bz;
-       Data_addr_o <= 'bz;
+       Data_din_o <= 'b0;
+       Data_rd_o <= 'b0;
+       Data_addr_o <= 'b0;
        // Bi-directional signals
  
      end    
@@ -201,16 +201,16 @@ end
        // 
        // Members within the dmem_initiator_struct:
        //   bit complete_data ;
-       //   bit_16 Data_dout ;
-       //   bit_16 Data_din ;
+       //   bit [15:0] Data_dout ;
+       //   bit [15:0] Data_din ;
        //   bit Data_rd ;
-       //   bit_16 Data_addr ;
+       //   bit [15:0] Data_addr ;
        // Members within the dmem_responder_struct:
        //   bit complete_data ;
-       //   bit_16 Data_dout ;
-       //   bit_16 Data_din ;
+       //   bit [15:0] Data_dout ;
+       //   bit [15:0] Data_din ;
        //   bit Data_rd ;
-       //   bit_16 Data_addr ;
+       //   bit [15:0] Data_addr ;
        initiator_struct = dmem_initiator_struct;
        //
        // Reference code;
@@ -262,19 +262,18 @@ bit first_transfer=1;
        );// pragma tbx xtf   
   // Variables within the dmem_initiator_struct:
   //   bit complete_data ;
-  //   bit_16 Data_dout ;
-  //   bit_16 Data_din ;
+  //   bit [15:0] Data_dout ;
+  //   bit [15:0] Data_din ;
   //   bit Data_rd ;
-  //   bit_16 Data_addr ;
+  //   bit [15:0] Data_addr ;
   // Variables within the dmem_responder_struct:
   //   bit complete_data ;
-  //   bit_16 Data_dout ;
-  //   bit_16 Data_din ;
+  //   bit [15:0] Data_dout ;
+  //   bit [15:0] Data_din ;
   //   bit Data_rd ;
-  //   bit_16 Data_addr ;
+  //   bit [15:0] Data_addr ;
        // Reference code;
        //    How to wait for signal value
-       //      while (control_signal == 1'b1) @(posedge clock_i);
        //    
        //    How to assign a initiator struct member, named xyz, from a signal.   
        //    All available responder input and inout signals listed.
@@ -287,23 +286,18 @@ bit first_transfer=1;
        //    All available responder output and inout signals listed.
        //    Notice the _o.  Those are storage variables that allow for procedural assignment.
        //    Responder output signals
-       //      complete_data_o <= dmem_responder_struct.xyz;  //     
-       //      Data_dout_o <= dmem_responder_struct.xyz;  //    [15:0] 
-       //    Responder inout signals
-    
-  @(posedge clock_i);
-  while(Data_rd_i === 1'bx) @(posedge clock_i);
-    
-    if(Data_rd_i === 1) begin
-       	Data_dout_o <= dmem_responder_struct.Data_dout;
-	      complete_data_o <= 1'b1 ;
-	  end
-    else if(Data_rd_i === 0) begin
-	    complete_data_o <= 1'b1 ;
-	  end
-    @(posedge clock_i);
-    complete_data_o <= 1'b0 ;
-    
+       
+        while (reset_i == 1'b1) @(posedge clock_i);
+        Data_dout_o <= dmem_responder_struct.Data_dout;
+        if(Data_addr_i === 'z) begin
+       
+          complete_data_o = 0;
+        end
+        else  begin
+          complete_data_o = 1;	
+        end
+        @(posedge clock_i);
+   
   endtask
 // pragma uvmf custom respond_and_wait_for_next_transfer end
 

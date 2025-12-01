@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------
-// Created with uvmf_gen version 2023.4
+// Created with uvmf_gen version 2023.4_2
 //----------------------------------------------------------------------
 // pragma uvmf custom header begin
 // pragma uvmf custom header end
@@ -15,7 +15,6 @@
 //
                                                                                
 
-typedef bit [15:0] bit_16;
 
 // pragma uvmf custom additional begin
 // pragma uvmf custom additional end

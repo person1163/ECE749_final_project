@@ -1,5 +1,5 @@
 //----------------------------------------------------------------------
-// Created with uvmf_gen version 2023.4
+// Created with uvmf_gen version 2023.4_2
 //----------------------------------------------------------------------
 // pragma uvmf custom header begin
 // pragma uvmf custom header end
@@ -71,7 +71,7 @@ class dmem_monitor  extends uvmf_monitor_base #(
  virtual function void notify_transaction(input dmem_monitor_s dmem_monitor_struct);
  
  
-    trans = new("trans");
+    trans = TRANS_T::type_id::create("trans");
     trans.from_monitor_struct(dmem_monitor_struct);
     trans.start_time = time_stamp;                                                          
     trans.end_time = $time;                                                                 
