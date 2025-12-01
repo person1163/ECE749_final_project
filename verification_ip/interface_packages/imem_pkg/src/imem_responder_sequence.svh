@@ -28,15 +28,14 @@ class imem_responder_sequence
 
   task body();
     req=imem_transaction::type_id::create("req");
-    repeat(2)begin
+  
       for (int i=0;i<8;i++) begin
         start_item(req);
-        req.Instr_dout = {4'h5, i[2:0], i[2:0], 1'b1, 5'b0};
+        req.Instr_dout = {4'd5, i[2:0], i[2:0], 1'b1, 5'b0};
         req.complete_instr = 1;
         finish_item(req);
       end
-    end
-
+   
     forever begin
       start_item(req);
       if(!req.randomize()) `uvm_fatal("SEQ", "imem_random_sequence::body()-imem_transaction randomization failed")
