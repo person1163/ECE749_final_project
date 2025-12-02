@@ -226,5 +226,6 @@ emu_build: libs build link optimize
 
 view_coverage:
 	xml2ucdb -format Excel ./test_plan_lc3_testbench.xml ./test_plan_layered_testbench.ucdb
-	vsim -viewcov ./test_plan_layered_testbench.ucdb
+	vcover merge -stats=none -strip 0 -totals merge_coverage.ucdb ./*.ucdb 
+	vsim -viewcov ./merge_coverage.ucdb
 # pragma uvmf custom additional_targets end
