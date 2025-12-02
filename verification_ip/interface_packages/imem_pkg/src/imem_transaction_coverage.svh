@@ -30,21 +30,66 @@ covergroup imem_transaction_cg;
   // UVMF_CHANGE_ME : Add coverage bins, crosses, exclusions, etc. according to coverage needs.
   option.auto_bin_max=1024;
   option.per_instance=1;
-opcodes: coverpoint coverage_trans.Instr_dout[15:12] {
+// LD
+LD: coverpoint coverage_trans.Instr_dout[15:12] {
     bins op_ld = {4'h2};
-    bins op_ldr = {4'h6};
-    bins op_ldi = {4'ha};
-    bins op_lea = {4'he};
-    bins op_st = {4'h3};
-    bins op_str = {4'h7};
-    bins op_sti = {4'hb};
-    bins op_not = {4'h9};
-    bins op_and = {4'h5};
-    bins op_add = {4'h1};
-    bins op_br = {4'h0};          // BR opcode
-    bins op_jmp = {4'hc};         // JMP opcode
 }
-  // pragma uvmf custom covergroup end
+
+// LDR
+LDR: coverpoint coverage_trans.Instr_dout[15:12] {
+    bins op_ldr = {4'h6};
+}
+
+// LDI
+LDI: coverpoint coverage_trans.Instr_dout[15:12] {
+    bins op_ldi = {4'ha};
+}
+
+// LEA
+LEA: coverpoint coverage_trans.Instr_dout[15:12] {
+    bins op_lea = {4'he};
+}
+
+// ST
+ST: coverpoint coverage_trans.Instr_dout[15:12] {
+    bins op_st = {4'h3};
+}
+
+// STR
+STR: coverpoint coverage_trans.Instr_dout[15:12] {
+    bins op_str = {4'h7};
+}
+
+// STI
+STI: coverpoint coverage_trans.Instr_dout[15:12] {
+    bins op_sti = {4'hb};
+}
+
+// NOT
+NOT: coverpoint coverage_trans.Instr_dout[15:12] {
+    bins op_not = {4'h9};
+}
+
+// AND
+AND: coverpoint coverage_trans.Instr_dout[15:12] {
+    bins op_and = {4'h5};
+}
+
+// ADD
+ADD: coverpoint coverage_trans.Instr_dout[15:12] {
+    bins op_add = {4'h1};
+}
+
+// BR
+BR: coverpoint coverage_trans.Instr_dout[15:12] {
+    bins op_br = {4'h0};
+}
+
+// JMP
+JMP: coverpoint coverage_trans.Instr_dout[15:12] {
+    bins op_jmp = {4'hc};
+}
+
 endgroup
 
 

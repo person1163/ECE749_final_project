@@ -220,4 +220,15 @@ build: $(BUILD_TGT)
 emu_build: libs build link optimize
 
 # pragma uvmf custom additional_targets begin
+merge_coverage:
+	xml2ucdb -format Excel ./test_plan_lc3_testbench.xml ./test_plan_layered_testbench.ucdb
+	vcover merge -stats=none -strip 0 -totals sim_and_testplan_merged.ucdb ./*.ucdb
+	vsim -viewcov ./sim_and_testplan_merged.ucdb
+
+
+# regress:
+# 	./testlist.sh
+
+view_coverage:
+	vsim -viewcov ./sim_and_testplan_merged.ucdb
 # pragma uvmf custom additional_targets end
