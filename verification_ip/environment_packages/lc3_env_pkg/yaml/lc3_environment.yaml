@@ -26,14 +26,11 @@ uvmf:
       subenvs:
       - name: fetch
         parameters: []
-        reg_block_instance_name: fetch_rm
         type: fetch
       - name: memaccess
         parameters: []
-        reg_block_instance_name: memaccess_rm
         type: memaccess
       - name: control
         parameters: []
-        reg_block_instance_name: control_rm
         type: control
       tlm_connections: []

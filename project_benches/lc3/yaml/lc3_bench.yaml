@@ -18,7 +18,6 @@ uvmf:
         value: ACTIVE
       - bfm_name: dmem_agent
         value: ACTIVE
-      active_passive_default: ACTIVE
       clock_half_period: 5ns
       clock_phase_offset: 5ns
       existing_library_component: 'True'
